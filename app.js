@@ -5,11 +5,10 @@ var express = require('express'),
     expressJWT = require('express-jwt'),
     config = require('./config/variables.js'),
     routes = require('./routers/main.js'),
-    app = express()
+    app = express();
 
 // ***** DATABASE ***** //
 mongoose.connect(config.db, function() {
-// require('./seed.js')
   console.log('\nremote database connection established at ' + config.db + '\n');
 });
 
@@ -27,15 +26,9 @@ app.use(methodOverride(function(req, res) {
   }
 }));
 
-app.use('/api', routes);
-
 // ***** ROUTING ***** //
 // Set the static files directory
 app.use(express.static(__dirname + '/public'));
-
-app.get('*', function(req, res) {
-  return res.sendFile(__dirname + '/public/index.html');
-});
 // Set up expressJWT to authenticate all api routes except the login and register forms (see documentation for more information)
 app.use('/api', expressJWT({ secret: config.secret })
 .unless({
@@ -45,9 +38,9 @@ app.use('/api', expressJWT({ secret: config.secret })
   ]
 }));
 // Connect to all prescribed routes
-
+app.use('/api', routes);
 // Catch extraneous GET requests for the HTML page
-app.get('/', function(req, res) {
+app.get('*', function(req, res) {
   return res.sendFile(__dirname + '/public/index.html');
 });
 

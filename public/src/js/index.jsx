@@ -7,13 +7,22 @@ var Link     = require('react-router').Link
 var browserHistory = require('react-router').browserHistory
 
 
-/***********************
-********components******
-*************************/
+/********components******/
+var Register = require('./components/register.jsx');
 
 
-ReactDOM.render((
-  <Router history={browserHistory}>
-  
-  </Router>
-), document.getElementById('app'))
+
+var App = React.createClass({
+  render: function() {
+    return (
+      <Router history={browserHistory}>
+        <Route path="/register" component={Register}/>
+
+	     </Router>
+    )
+  }
+});
+
+ReactDOM.render(<App />, document.getElementById('app'), function() {
+  console.log('react app rendered successfully onto the dom!');
+})
