@@ -1,0 +1,319 @@
+$primary-color : #e6e6e6;
+$button-color : #e65100;
+$font-stack : 'Open Sans', sans-serif;;
+$position : center;
+$client-dashoboard-title-colour : orange;
+$button-border-radius : 5px;
+$cream: #F2EFEB;
+$cream2: #F2EFEB - 100;
+
+#logo{
+  height: 60px;
+}
+
+#round-profile-pic{
+	border-radius: 50%;
+}
+
+#card-reveal-spartan{
+	background-color: $primary-color;
+}
+
+#card-reveal-client{
+	background-color: $primary-color;
+}
+
+#header-title {
+	text-align: $position;
+	font-family: $font-stack;
+	text-transform: uppercase;
+	color: #989898;
+}
+#text-banner{
+  text-align: $position;
+  font-family: $font-stack;
+  text-transform: uppercase;
+  color: white;
+}
+#text-client{
+  margin: 0;
+  text-align: $position;
+  font-family: $font-stack;
+  text-transform: uppercase;
+  color: black;
+  opacity: 1;
+}
+
+#card-title-spartan {
+	color: $client-dashoboard-title-colour;
+}
+
+#card-title-client {
+	color: $client-dashoboard-title-colour;
+}
+
+#admin-dashboard {
+	text-align: center;
+}
+
+button#button-update-spartan {
+	border-radius: $button-border-radius;
+	font-family: $font-stack;
+  $button-color : #e65100;
+	margin: 5px;
+}
+
+button#button-delete-spartan {
+	border-radius: $button-border-radius;
+	font-family: $font-stack;
+  $button-color : #e65100;
+	margin: 5px;
+}
+
+button#button-delete-client{
+	border-radius: $button-border-radius;
+	font-family: $font-stack;
+}
+
+button#button-view-spartan {
+	border-radius: $button-border-radius;
+	font-family: $font-stack;
+}
+
+button#button-view-spartans {
+	border-radius: $button-border-radius;
+	font-family: $font-stack;
+}
+
+button#button-view-clients {
+	border-radius: $button-border-radius;
+	font-family: $font-stack;
+}
+
+button#button-register {
+	border-radius: $button-border-radius;
+	font-family: $font-stack;
+}
+
+button#button-send-request {
+	border-radius: $button-border-radius;
+	font-family: $font-stack;
+}
+
+#button-spartan {
+	text-align: $position;
+	font-family: $font-stack;
+}
+
+#button-client {
+	text-align: $position;
+	font-family: $font-stack;
+}
+
+div.card-action {
+	text-align: $position;
+}
+
+.p {
+	font-family: $font-stack;
+}
+
+#header-nav {
+	font-family: $font-stack;
+}
+
+div.footer {
+	font-family: $font-stack;
+}
+
+
+#button-back-spartanlist {
+	border-radius: $button-border-radius;
+	font-family: $font-stack;
+	margin: $button-border-radius;
+}
+
+#button-update-info {
+	border-radius: $button-border-radius;
+	font-family: $font-stack;
+	float: right;
+	margin: $button-border-radius;
+}
+
+.profile-image {
+	width: 200px;
+	height: 200px;
+	border-radius: $button-border-radius + 95px;
+	margin-bottom: $button-border-radius + 15px;
+}
+#client-image{
+  width: 200px;
+  height: 200px;
+}
+#client-banner{
+    background-size: cover;
+    height: 335px;
+  width: 100%;
+  background-image: url(http://www.medhaid.com/images/our_client/our-clients.jpg);
+  opacity: 0.85;
+}
+#googlemap{
+  padding-top: 50px;
+}
+
+.grad {
+	background-color : $cream;
+	background-image : -webkit-gradient(linear, left top, eft bottom, from($cream), to($cream2));
+	background-image : -webkit-linear-gradient(top, $cream, $cream2);
+	background-image : -moz-linear-gradient(top, $cream, $cream2);
+	background-image : -ms-linear-gradient(top, $cream, $cream2);
+	background-image : -o-linear-gradient(top, $cream, $cream2);
+	height : auto;
+}
+
+hr {
+	display: block;
+	border-width: 1px;
+	border-color: #4DB6AC;
+}
+
+#bio-cv {
+	text-align: left;
+	font-family: $font-stack;
+	font-size: 18px;
+
+	.link {
+		text-decoration: underline;
+		font-family: $font-stack;
+	}
+}
+
+.viewBioDescription {
+	position: relative;
+
+	text-align: center;
+	font-family: $font-stack;
+	border-radius: $button-border-radius;
+	.viewBio {
+		text-align: left;
+		font-family: $font-stack;
+		font-style: italic;
+		font-size: 16px;
+	}
+}
+
+.viewJobDescription {
+	position: relative;
+
+	text-align: center;
+	font-family: $font-stack;
+	border-radius: $button-border-radius;
+	.viewWorkExperience {
+		text-align: left;
+		font-family: $font-stack;
+		.job-class {
+			font-style: italic;
+			font-size: 16px;
+		}
+	}
+}
+
+.viewEducation {
+	position: relative;
+
+	text-align: center;
+	font-family: $font-stack;
+	border-radius: $button-border-radius;
+	.viewAllEducation {
+		text-align: left;
+		font-family: $font-stack;
+		.job-class {
+			font-style: italic;
+			font-size: 16px;
+		}
+	}
+}
+
+.viewInterest {
+	position: relative;
+	text-align: center;
+	font-family: $font-stack;
+	border-radius: $button-border-radius;
+	.listOfInterest {
+		text-align: left;
+		font-family: $font-stack;
+		font-style: italic;
+		font-size: 16px;
+	}
+}
+
+#header-create-user {
+	text-align: center;
+	font-size: 40px;
+}
+
+#button-register {
+	margin-top: 15px;
+}
+
+.label-create-cv {
+	font-size: 18px;
+}
+
+#header-title {
+  z-index: 1;
+  position: relative;
+}
+#text-banner {
+   position: absolute;
+   top: 10%;
+   left: 0;
+   width: 100%;
+   z-index: 1;
+}
+
+#site-button{
+  position: absolute;
+  top: 90%;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+
+}
+
+#image-banner {
+  position: relative;
+  height: 335px;
+  width: 100%;
+  background-image: url(http://spartaglobal.com/wp-content/uploads/2014/09/New-Dark-Face-Squares.png);
+}
+
+//Media-query for responisve application
+@media only screen and (max-width: 600px) {
+
+   #logo {
+       width: 25%;
+       height: 6.5%;
+   }
+
+   #search-bar {
+       width: 25%;
+   }
+
+}
+
+@media only screen and (max-width: 860px) {
+
+   #search-bar {
+       width: 25%;
+   }
+
+}
+
+@media only screen and (max-width: 860px) {
+
+   #search-bar {
+       width: 25%;
+   }
+
+}
