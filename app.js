@@ -3,13 +3,14 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     methodOverride = require('method-override'),
     expressJWT = require('express-jwt'),
-    config = require('./config/variables.js'),
-    routes = require('./routers/main.js'),
+    config = require('./config/variables'),
+    routes = require('./routers/main'),
     app = express();
 
 // ***** DATABASE ***** //
 mongoose.connect(config.db, function() {
   console.log('\nremote database connection established at ' + config.db + '\n');
+  require('./seed');
 });
 
 // ***** MIDDLEWARE ***** //

@@ -5,10 +5,8 @@ var validator = require("validator");
 var userSchema = mongoose.Schema({
   firstName:    { type: String },
   lastName:     { type: String },
-  image:        { type: String },
-  username:     { type: String, required: true, unique: true },
   email:        { type: String, required: true, unique: true },
-  type:         { type: String, enum: ['spartan', 'admin'], required: true },
+  type:         { type: String, enum: ['contractor', 'approver','admin'], required: true },
   passwordHash: { type: String }
 });
 

@@ -1,9 +1,8 @@
 var merge = require("merge");
 var axios = require("axios");
+var Dispatcher = require('../dispatchers/mainDispatcher.js');
 var EventEmitter = require("events").EventEmitter;
 var browserHistory = require("react-router").browserHistory;
-var MainDispatcher = require("../dispatchers/main");
-var MainConstant = require("../constants/main");
 
 //variables to store
 var _user = JSON.parse(localStorage.getItem("user"));
@@ -20,7 +19,7 @@ var UserStore = merge(EventEmitter.prototype, {
 
 module.exports = UserStore;
 
-MainDispatcher.register(handleAction);
+Dispatcher.register(handleAction);
 
 function handleAction(payload){
   if (payload.action === MainConstant.USER.LOGIN){

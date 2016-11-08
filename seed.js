@@ -1,18 +1,47 @@
-var mongoose = require('mongoose');
+var userSchema = require("./models/user");
 
-var databaseURL = 'mongodb://localhost:3030/contractor';
-mongoose.connect(databaseURL);
+userSchema.remove({}, function() {
+  createUser({
+    firstName:"Rashid",
+    lastName:"Awil",
+    password:"password",
+    passwordConfirmation:"password",
+    email: "rawil@spartaglobal.co",
+    type: "contractor"
+  });
 
-var User     = require("../models/user");
+  createUser({
+    firstName:"Moh",
+    lastName:"Sharif",
+    password:"password",
+    passwordConfirmation:"password",
+    email: "msharif@spartaglobal.co",
+    type: "contractor"
+  });
 
+  createUser({
+    firstName:"Jay",
+    lastName:"???",
+    password:"password",
+    passwordConfirmation:"password",
+    email: "jay@spartaglobal.co",
+    type: "admin"
+  });
 
-var user1 = new User({
-  username:     "con1",
-  email:        "con1@gmail.com",
-  password:     "123"
-})
+  createUser({
+    firstName:"Yussuf",
+    lastName:"Elarif",
+    password:"password",
+    passwordConfirmation:"password",
+    email: "yelarif@spartaglobal.co",
+    type: "approver"
+  });
+});
 
-user1.save(function(err, user) {
- if (err) return console.log(err);
- console.log("User saved! ", user);
-})
+function createUser(users){
+  var user = new userSchema(users);
+  user.save(function(err, users) {
+    //if (err) return console.log(err);
+    //console.log("saved user");
+  });
+}
