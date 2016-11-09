@@ -18,7 +18,7 @@ function register(req, res) {
 }
 
 function login(req, res) {
-  User.findOne({username: req.body.username}, function(err, user) {
+  User.findOne({email: req.body.email}, function(err, user) {
     if (err) return res.status(500).json({ message: "Something went wrong" });
     if (!user) return res.status(403).json({ message: 'No user found.' });
     if (!user.validatePassword(req.body.password)) return res.status(403).json({ message: 'Password validation failed' });

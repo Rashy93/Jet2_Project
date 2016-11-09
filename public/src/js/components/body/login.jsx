@@ -1,8 +1,8 @@
 var React = require('react');
-var Dispatcher = require('../dispatchers/mainDispatcher.js');
+var Dispatcher = require("../../dispatchers/mainDispatcher"); // requiring dispatcher
 var ReactRouter = require('react-router');
-var MainConstant = require("../constants/mainConstant");
-var userStore = require("../stores/userStore.js");
+var MainConstant = require("../../constants/mainConstant"); // requiring constant
+var userStore = require("../../stores/userStore.js");
 var browserHistory = ReactRouter.browserHistory;
 
 var Login = React.createClass({
@@ -30,7 +30,7 @@ var Login = React.createClass({
   },
   handleError: function(){
     this.setState({
-      error: UserStore.getError().message
+      error: userStore.getError().message
     });
   },
   render: function(){

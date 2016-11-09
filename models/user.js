@@ -2,13 +2,17 @@ var mongoose  = require("mongoose");
 var bcrypt    = require("bcrypt-nodejs");
 var validator = require("validator");
 
+var Timesheet = require ('./timeSheet');
+
 var userSchema = mongoose.Schema({
   firstName:    { type: String },
   lastName:     { type: String },
+  timeSheet:    [Timesheet.schema],
   email:        { type: String, required: true, unique: true },
-  type:         { type: String, enum: ['contractor', 'approver','admin'], required: true },
+  type:         { type: String, enum: ['contractor', 'approver', 'admin'], required: true },
   passwordHash: { type: String }
 });
+
 
 // Instance method to validate password
 userSchema.methods.validatePassword = function(password) {

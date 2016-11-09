@@ -56,6 +56,8 @@
 
 	/********components******/
 	var Login = __webpack_require__(227);
+	var Main = __webpack_require__(261);
+	var Dashboard = __webpack_require__(264);
 
 	var App = React.createClass({
 	  displayName: 'App',
@@ -64,7 +66,12 @@
 	    return React.createElement(
 	      Router,
 	      { history: browserHistory },
-	      React.createElement(Route, { path: '/Login', component: Login })
+	      React.createElement(Route, { path: '/Login', component: Login }),
+	      React.createElement(
+	        Route,
+	        { path: '/', component: Main },
+	        React.createElement(IndexRoute, { component: Dashboard })
+	      )
 	    );
 	  }
 	});
@@ -26352,10 +26359,10 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var Dispatcher = __webpack_require__(228);
+	var Dispatcher = __webpack_require__(228); // requiring dispatcher
 	var ReactRouter = __webpack_require__(172);
-	var MainConstant = __webpack_require__(260);
-	var userStore = __webpack_require__(231);
+	var MainConstant = __webpack_require__(231); // requiring constant
+	var userStore = __webpack_require__(232);
 	var browserHistory = ReactRouter.browserHistory;
 
 	var Login = React.createClass({
@@ -26383,7 +26390,7 @@
 	  },
 	  handleError: function handleError() {
 	    this.setState({
-	      error: UserStore.getError().message
+	      error: userStore.getError().message
 	    });
 	  },
 	  render: function render() {
@@ -26735,21 +26742,46 @@
 
 /***/ },
 /* 231 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	module.exports = {
+	  USER: {
+	    LOGIN: "USER LOGIN",
+	    LOGOUT: "USER LOGOUT",
+	    UPDATE: {
+	      LOGIN: "USER UPDATE LOGIN",
+	      LOGOUT: "USER UPDATE LOGOUT",
+	      DELETE: "USER UPDATE DELETE"
+	    },
+	    ERROR: {
+	      LOGIN: "USER ERROR LOGIN",
+	      LOGOUT: "USER ERROR LOGOUT"
+	    },
+	    DELETE: "USER DELETE"
+	  }
+	};
+
+/***/ },
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var merge = __webpack_require__(232);
-	var axios = __webpack_require__(234);
+	var merge = __webpack_require__(233);
+	var axios = __webpack_require__(235);
 	var Dispatcher = __webpack_require__(228);
-	var EventEmitter = __webpack_require__(259).EventEmitter;
+	var EventEmitter = __webpack_require__(260).EventEmitter;
 	var browserHistory = __webpack_require__(172).browserHistory;
+	var MainDispatcher = __webpack_require__(228); // requiring dispatcher
+	var MainConstant = __webpack_require__(231); // requiring constant
 
 	//variables to store
 	var _user = JSON.parse(localStorage.getItem("user"));
 	var _error = {};
 
-	var UserStore = merge(EventEmitter.prototype, {
+	var userStore = merge(EventEmitter.prototype, {
 	  getError: function getError() {
 	    return _error;
 	  },
@@ -26758,7 +26790,7 @@
 	  }
 	});
 
-	module.exports = UserStore;
+	module.exports = userStore;
 
 	Dispatcher.register(handleAction);
 
@@ -26766,9 +26798,6 @@
 	  if (payload.action === MainConstant.USER.LOGIN) {
 	    login(payload.user);
 	    console.log("login");
-	  } else if (payload.action === MainConstant.USER.REGISTER) {
-	    register(payload.user);
-	    console.log("register");
 	  } else if (payload.action === MainConstant.USER.LOGOUT) {
 	    localStorage.removeItem("user");
 	    localStorage.removeItem("token");
@@ -26792,17 +26821,8 @@
 	  });
 	}
 
-	function register(user) {
-	  axios.post("/api/register", user).then(function (res) {
-	    browserHistory.push("/");
-	  }).catch(function (err) {
-	    console.log(err);
-	    UserStore.emit(MainConstant.USER.ERROR.REGISTER);
-	  });
-	}
-
 /***/ },
-/* 232 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {/*!
@@ -26980,10 +27000,10 @@
 		}
 
 	})(typeof module === 'object' && module && typeof module.exports === 'object' && module.exports);
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(233)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(234)(module)))
 
 /***/ },
-/* 233 */
+/* 234 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -26999,20 +27019,20 @@
 
 
 /***/ },
-/* 234 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(235);
+	module.exports = __webpack_require__(236);
 
 /***/ },
-/* 235 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(236);
-	var bind = __webpack_require__(237);
-	var Axios = __webpack_require__(238);
+	var utils = __webpack_require__(237);
+	var bind = __webpack_require__(238);
+	var Axios = __webpack_require__(239);
 
 	/**
 	 * Create an instance of Axios
@@ -27045,15 +27065,15 @@
 	};
 
 	// Expose Cancel & CancelToken
-	axios.Cancel = __webpack_require__(256);
-	axios.CancelToken = __webpack_require__(257);
-	axios.isCancel = __webpack_require__(253);
+	axios.Cancel = __webpack_require__(257);
+	axios.CancelToken = __webpack_require__(258);
+	axios.isCancel = __webpack_require__(254);
 
 	// Expose all/spread
 	axios.all = function all(promises) {
 	  return Promise.all(promises);
 	};
-	axios.spread = __webpack_require__(258);
+	axios.spread = __webpack_require__(259);
 
 	module.exports = axios;
 
@@ -27062,12 +27082,12 @@
 
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var bind = __webpack_require__(237);
+	var bind = __webpack_require__(238);
 
 	/*global toString:true*/
 
@@ -27367,7 +27387,7 @@
 
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27384,17 +27404,17 @@
 
 
 /***/ },
-/* 238 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var defaults = __webpack_require__(239);
-	var utils = __webpack_require__(236);
-	var InterceptorManager = __webpack_require__(250);
-	var dispatchRequest = __webpack_require__(251);
-	var isAbsoluteURL = __webpack_require__(254);
-	var combineURLs = __webpack_require__(255);
+	var defaults = __webpack_require__(240);
+	var utils = __webpack_require__(237);
+	var InterceptorManager = __webpack_require__(251);
+	var dispatchRequest = __webpack_require__(252);
+	var isAbsoluteURL = __webpack_require__(255);
+	var combineURLs = __webpack_require__(256);
 
 	/**
 	 * Create a new instance of Axios
@@ -27475,13 +27495,13 @@
 
 
 /***/ },
-/* 239 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
-	var utils = __webpack_require__(236);
-	var normalizeHeaderName = __webpack_require__(240);
+	var utils = __webpack_require__(237);
+	var normalizeHeaderName = __webpack_require__(241);
 
 	var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 	var DEFAULT_CONTENT_TYPE = {
@@ -27498,10 +27518,10 @@
 	  var adapter;
 	  if (typeof XMLHttpRequest !== 'undefined') {
 	    // For browsers use XHR adapter
-	    adapter = __webpack_require__(241);
+	    adapter = __webpack_require__(242);
 	  } else if (typeof process !== 'undefined') {
 	    // For node use HTTP adapter
-	    adapter = __webpack_require__(241);
+	    adapter = __webpack_require__(242);
 	  }
 	  return adapter;
 	}
@@ -27568,12 +27588,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 240 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(236);
+	var utils = __webpack_require__(237);
 
 	module.exports = function normalizeHeaderName(headers, normalizedName) {
 	  utils.forEach(headers, function processHeader(value, name) {
@@ -27586,18 +27606,18 @@
 
 
 /***/ },
-/* 241 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
-	var utils = __webpack_require__(236);
-	var settle = __webpack_require__(242);
-	var buildURL = __webpack_require__(245);
-	var parseHeaders = __webpack_require__(246);
-	var isURLSameOrigin = __webpack_require__(247);
-	var createError = __webpack_require__(243);
-	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(248);
+	var utils = __webpack_require__(237);
+	var settle = __webpack_require__(243);
+	var buildURL = __webpack_require__(246);
+	var parseHeaders = __webpack_require__(247);
+	var isURLSameOrigin = __webpack_require__(248);
+	var createError = __webpack_require__(244);
+	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(249);
 
 	module.exports = function xhrAdapter(config) {
 	  return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -27693,7 +27713,7 @@
 	    // This is only done if running in a standard browser environment.
 	    // Specifically not if we're in a web worker, or react-native.
 	    if (utils.isStandardBrowserEnv()) {
-	      var cookies = __webpack_require__(249);
+	      var cookies = __webpack_require__(250);
 
 	      // Add xsrf header
 	      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -27770,12 +27790,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 242 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var createError = __webpack_require__(243);
+	var createError = __webpack_require__(244);
 
 	/**
 	 * Resolve or reject a Promise based on response status.
@@ -27801,12 +27821,12 @@
 
 
 /***/ },
-/* 243 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var enhanceError = __webpack_require__(244);
+	var enhanceError = __webpack_require__(245);
 
 	/**
 	 * Create an Error with the specified message, config, error code, and response.
@@ -27824,7 +27844,7 @@
 
 
 /***/ },
-/* 244 */
+/* 245 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27849,12 +27869,12 @@
 
 
 /***/ },
-/* 245 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(236);
+	var utils = __webpack_require__(237);
 
 	function encode(val) {
 	  return encodeURIComponent(val).
@@ -27923,12 +27943,12 @@
 
 
 /***/ },
-/* 246 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(236);
+	var utils = __webpack_require__(237);
 
 	/**
 	 * Parse headers into an object
@@ -27966,12 +27986,12 @@
 
 
 /***/ },
-/* 247 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(236);
+	var utils = __webpack_require__(237);
 
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -28040,7 +28060,7 @@
 
 
 /***/ },
-/* 248 */
+/* 249 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28082,12 +28102,12 @@
 
 
 /***/ },
-/* 249 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(236);
+	var utils = __webpack_require__(237);
 
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -28141,12 +28161,12 @@
 
 
 /***/ },
-/* 250 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(236);
+	var utils = __webpack_require__(237);
 
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -28199,15 +28219,15 @@
 
 
 /***/ },
-/* 251 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(236);
-	var transformData = __webpack_require__(252);
-	var isCancel = __webpack_require__(253);
-	var defaults = __webpack_require__(239);
+	var utils = __webpack_require__(237);
+	var transformData = __webpack_require__(253);
+	var isCancel = __webpack_require__(254);
+	var defaults = __webpack_require__(240);
 
 	/**
 	 * Throws a `Cancel` if cancellation has been requested.
@@ -28284,12 +28304,12 @@
 
 
 /***/ },
-/* 252 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(236);
+	var utils = __webpack_require__(237);
 
 	/**
 	 * Transform the data for a request or a response
@@ -28310,7 +28330,7 @@
 
 
 /***/ },
-/* 253 */
+/* 254 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28321,7 +28341,7 @@
 
 
 /***/ },
-/* 254 */
+/* 255 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28341,7 +28361,7 @@
 
 
 /***/ },
-/* 255 */
+/* 256 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28359,7 +28379,7 @@
 
 
 /***/ },
-/* 256 */
+/* 257 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28384,12 +28404,12 @@
 
 
 /***/ },
-/* 257 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Cancel = __webpack_require__(256);
+	var Cancel = __webpack_require__(257);
 
 	/**
 	 * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -28447,7 +28467,7 @@
 
 
 /***/ },
-/* 258 */
+/* 259 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28480,7 +28500,7 @@
 
 
 /***/ },
-/* 259 */
+/* 260 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -28788,30 +28808,122 @@
 
 
 /***/ },
-/* 260 */
-/***/ function(module, exports) {
+/* 261 */
+/***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	module.exports = {
-	  USER: {
-	    LOGIN: "USER LOGIN",
-	    REGISTER: "USER REGISTER",
-	    LOGOUT: "USER LOGOUT",
-	    UPDATE: {
-	      LOGIN: "USER UPDATE LOGIN",
-	      REGISTER: "USER UPDATE REGISTER",
-	      LOGOUT: "USER UPDATE LOGOUT",
-	      DELETE: "USER UPDATE DELETE"
-	    },
-	    ERROR: {
-	      LOGIN: "USER ERROR LOGIN",
-	      REGISTER: "USER ERROR REGISTER",
-	      LOGOUT: "USER ERROR LOGOUT"
-	    },
-	    DELETE: "USER DELETE"
+	var React = __webpack_require__(1);
+	var Header = __webpack_require__(262);
+	var Footer = __webpack_require__(263);
+
+	var Main = React.createClass({
+		displayName: "Main",
+
+		render: function render() {
+			return React.createElement(
+				"div",
+				null,
+				React.createElement(Header, null),
+				React.createElement(
+					"main",
+					null,
+					this.props.children
+				),
+				React.createElement(Footer, null)
+			);
+		}
+	});
+
+	module.exports = Main;
+
+/***/ },
+/* 262 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var Dispatcher = __webpack_require__(228);
+	var ReactRouter = __webpack_require__(172);
+	var MainConstant = __webpack_require__(231);
+	var userStore = __webpack_require__(232);
+	var browserHistory = ReactRouter.browserHistory;
+
+	var Header = React.createClass({
+	  displayName: 'Header',
+
+
+	  render: function render() {
+	    return React.createElement(
+	      'h1',
+	      null,
+	      'Header'
+	    );
 	  }
-	};
+	});
+
+	module.exports = Header;
+
+/***/ },
+/* 263 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var Dispatcher = __webpack_require__(228);
+	var ReactRouter = __webpack_require__(172);
+	var MainConstant = __webpack_require__(231);
+	var userStore = __webpack_require__(232);
+	var browserHistory = ReactRouter.browserHistory;
+
+	var Footer = React.createClass({
+	  displayName: 'Footer',
+
+
+	  render: function render() {
+	    return React.createElement(
+	      'h1',
+	      null,
+	      'Footer'
+	    );
+	  }
+	});
+
+	module.exports = Footer;
+
+/***/ },
+/* 264 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var Dispatcher = __webpack_require__(228);
+	var ReactRouter = __webpack_require__(172);
+	var MainConstant = __webpack_require__(231);
+	var userStore = __webpack_require__(232);
+	var browserHistory = ReactRouter.browserHistory;
+	/*****COMPONENTS*****/
+	// var TimeInput = require('../dashboard/timeinput');
+	// var TimeSheet = require('../dashboard/timesheet');
+	// var TotalSheet = require('../dashboard/totalsheet');
+
+	var Dashboard = React.createClass({
+	  displayName: 'Dashboard',
+
+
+	  render: function render() {
+	    return React.createElement(
+	      'h1',
+	      null,
+	      'Dashboard'
+	    );
+	  }
+	});
+
+	module.exports = Dashboard;
 
 /***/ }
 /******/ ]);

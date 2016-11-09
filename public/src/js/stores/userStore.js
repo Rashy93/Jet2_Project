@@ -3,12 +3,14 @@ var axios = require("axios");
 var Dispatcher = require('../dispatchers/mainDispatcher.js');
 var EventEmitter = require("events").EventEmitter;
 var browserHistory = require("react-router").browserHistory;
+var MainDispatcher = require("../dispatchers/mainDispatcher"); // requiring dispatcher
+var MainConstant = require("../constants/mainConstant"); // requiring constant
 
 //variables to store
 var _user = JSON.parse(localStorage.getItem("user"));
 var _error = {};
 
-var UserStore = merge(EventEmitter.prototype, {
+var userStore = merge(EventEmitter.prototype, {
   getError: function(){
     return _error;
   },
@@ -17,7 +19,7 @@ var UserStore = merge(EventEmitter.prototype, {
   }
 });
 
-module.exports = UserStore;
+module.exports = userStore;
 
 Dispatcher.register(handleAction);
 
@@ -25,10 +27,6 @@ function handleAction(payload){
   if (payload.action === MainConstant.USER.LOGIN){
     login(payload.user);
     console.log("login");
-  }
-  else if (payload.action === MainConstant.USER.REGISTER){
-    register(payload.user);
-    console.log("register");
   }
   else if (payload.action === MainConstant.USER.LOGOUT){
     localStorage.removeItem("user");
@@ -50,14 +48,5 @@ function login(user) {
   }).catch(function(err){
     console.log(err);
     UserStore.emit(MainConstant.USER.ERROR.LOGIN)
-  })
-}
-
-function register(user) {
-  axios.post("/api/register", user).then(function(res){
-    browserHistory.push("/");
-  }).catch(function(err){
-    console.log(err);
-    UserStore.emit(MainConstant.USER.ERROR.REGISTER)
   })
 }

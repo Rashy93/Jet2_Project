@@ -8,15 +8,21 @@ var browserHistory = require('react-router').browserHistory
 
 
 /********components******/
-var Login = require('./components/login.jsx');
-
+var Login = require('./components/body/login.jsx');
+var Main = require("./components/main.jsx");
+var Dashboard = require("./components/body/dashboard.jsx");
 
 
 var App = React.createClass({
   render: function() {
     return (
       <Router history={browserHistory}>
+
         <Route path="/Login" component={Login}/>
+
+            <Route path="/" component={Main}>
+           			 <IndexRoute component={Dashboard}/>
+            </Route>
 
 	     </Router>
     )
