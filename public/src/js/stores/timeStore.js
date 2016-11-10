@@ -29,7 +29,7 @@ function getCvData(){
 
  axios({
     method : 'GET',
-    url : '/api/spartans/' + _spartanId ,
+    url : '/api/timesheet/' + _timesheets ,
     headers : {
       'token': getToken()
     }
