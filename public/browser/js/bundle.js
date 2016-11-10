@@ -28906,9 +28906,9 @@
 	var userStore = __webpack_require__(232);
 	var browserHistory = ReactRouter.browserHistory;
 	/*****COMPONENTS*****/
-	// var TimeInput = require('../dashboard/timeinput');
-	// var TimeSheet = require('../dashboard/timesheet');
-	// var TotalSheet = require('../dashboard/totalsheet');
+	var TimeInput = __webpack_require__(265);
+	// var TimeSheet = require('./dashboard/timesheet.jsx');
+	var TotalSheet = __webpack_require__(267);
 
 	var Dashboard = React.createClass({
 	  displayName: 'Dashboard',
@@ -28916,14 +28916,287 @@
 
 	  render: function render() {
 	    return React.createElement(
-	      'h1',
+	      'div',
 	      null,
-	      'Dashboard'
+	      React.createElement(TotalSheet, null),
+	      React.createElement(TimeInput, null)
 	    );
 	  }
 	});
 
 	module.exports = Dashboard;
+
+/***/ },
+/* 265 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var Dispatcher = __webpack_require__(228); // requiring dispatcher
+	var ReactRouter = __webpack_require__(172);
+	var MainConstant = __webpack_require__(231); // requiring constant
+	var userStore = __webpack_require__(232);
+	var browserHistory = ReactRouter.browserHistory;
+	var TimeSheet = __webpack_require__(268);
+	var timesheetc = "";
+
+	var TimeInput = React.createClass({
+	  displayName: 'TimeInput',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      loader: true,
+	      sheet: {
+	        date: "",
+	        hours: "",
+	        comment: ""
+	      }
+	    };
+	  },
+	  // componentDidMount: function() {
+	  //   TimeStore.on("getTimedata", function() {
+	  //     this.setState({
+	  //       sheet: TimeStore.getTimeSheets(),
+	  //       loader: false,
+	  //     })
+	  //   }.bind(this));
+	  // },
+	  handleSave: function handleSave() {
+	    timesheetc = React.createElement(TimeSheet, { sheet: this.props.sheet });
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'section',
+	      null,
+	      React.createElement(
+	        'div',
+	        { className: 'form-horizontal' },
+	        React.createElement(
+	          'div',
+	          { className: 'form-group' },
+	          React.createElement(
+	            'div',
+	            { className: 'col-sm-6' },
+	            React.createElement(
+	              'label',
+	              null,
+	              'Date'
+	            ),
+	            React.createElement('input', { type: 'date', className: 'form-control', placeholder: 'Date' })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'col-sm-6' },
+	            React.createElement(
+	              'label',
+	              null,
+	              'Hours'
+	            ),
+	            React.createElement('input', { type: 'number', className: 'form-control', placeholder: 'Hours' })
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'form-group' },
+	          React.createElement(
+	            'div',
+	            { className: 'col-sm-12' },
+	            React.createElement(
+	              'label',
+	              null,
+	              'Comment'
+	            ),
+	            React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Comment' })
+	          )
+	        ),
+	        React.createElement(
+	          'button',
+	          { onClick: this.handleSave, className: 'btn btn-primary' },
+	          'Save'
+	        ),
+	        React.createElement(
+	          'button',
+	          { className: 'btn btn-danger' },
+	          'Cancel'
+	        )
+	      ),
+	      timesheetc
+	    );
+	  }
+	});
+
+	module.exports = TimeInput;
+
+/***/ },
+/* 266 */,
+/* 267 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var Dispatcher = __webpack_require__(228); // requiring dispatcher
+	var ReactRouter = __webpack_require__(172);
+	var MainConstant = __webpack_require__(231); // requiring constant
+	var userStore = __webpack_require__(232);
+	var browserHistory = ReactRouter.browserHistory;
+
+	var TotalSheet = React.createClass({
+	  displayName: 'TotalSheet',
+
+
+	  render: function render() {
+	    return React.createElement(
+	      'section',
+	      null,
+	      React.createElement(
+	        'div',
+	        { className: 'panel panel-default' },
+	        React.createElement(
+	          'div',
+	          { className: 'panel-heading' },
+	          React.createElement(
+	            'h1',
+	            { className: 'text-center' },
+	            'Total Time'
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'panel-body' },
+	          React.createElement(
+	            'h1',
+	            { className: 'text-center' },
+	            'Hours'
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'button',
+	        { className: 'btn btn-primary' },
+	        'Log Time'
+	      )
+	    );
+	  }
+	});
+
+	module.exports = TotalSheet;
+
+/***/ },
+/* 268 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var Dispatcher = __webpack_require__(228); // requiring dispatcher
+	var ReactRouter = __webpack_require__(172);
+	var MainConstant = __webpack_require__(231); // requiring constant
+	var userStore = __webpack_require__(232);
+	var browserHistory = ReactRouter.browserHistory;
+
+	var TimeSheet = React.createClass({
+	  displayName: 'TimeSheet',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      sheet: this.props.sheet
+	    };
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'section',
+	      null,
+	      React.createElement(
+	        'div',
+	        null,
+	        React.createElement('router-view', null),
+	        React.createElement(
+	          'div',
+	          { className: 'time-entries' },
+	          React.createElement(
+	            'p',
+	            null,
+	            React.createElement(
+	              'strong',
+	              null,
+	              'No time entries yet'
+	            )
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'list-group' },
+	            React.createElement(
+	              'a',
+	              { className: 'list-group-item', htmlFor: 'timeEntry in timeEntries' },
+	              React.createElement(
+	                'div',
+	                { className: 'row' },
+	                React.createElement(
+	                  'div',
+	                  { className: 'col-sm-2 user-details' },
+	                  React.createElement('img', { className: 'avatar img-circle img-responsive' }),
+	                  React.createElement(
+	                    'p',
+	                    { className: 'text-center' },
+	                    React.createElement(
+	                      'strong',
+	                      null,
+	                      '// Picture'
+	                    )
+	                  )
+	                ),
+	                React.createElement(
+	                  'div',
+	                  { className: 'col-sm-2 text-center time-block' },
+	                  React.createElement(
+	                    'h3',
+	                    { className: 'list-group-item-text total-time' },
+	                    React.createElement('i', { className: 'glyphicon glyphicon-time' }),
+	                    '8',
+	                    React.createElement(
+	                      'small',
+	                      null,
+	                      'hours'
+	                    )
+	                  ),
+	                  React.createElement(
+	                    'p',
+	                    { className: 'label label-primary text-center' },
+	                    React.createElement('i', { className: 'glyphicon glyphicon-calendar' }),
+	                    '2016-11-19'
+	                  )
+	                ),
+	                React.createElement(
+	                  'div',
+	                  { className: 'col-sm-7 comment-section' },
+	                  React.createElement(
+	                    'p',
+	                    null,
+	                    'Comment:',
+	                    this.state.sheet
+	                  )
+	                ),
+	                React.createElement(
+	                  'div',
+	                  { className: 'col-sm-1' },
+	                  React.createElement(
+	                    'button',
+	                    { className: 'btn btn-xs btn-danger delete-button' },
+	                    ' Cancel '
+	                  )
+	                )
+	              )
+	            )
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = TimeSheet;
 
 /***/ }
 /******/ ]);

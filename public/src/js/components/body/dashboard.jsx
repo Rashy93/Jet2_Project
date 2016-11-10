@@ -5,15 +5,18 @@ var MainConstant = require("../../constants/mainConstant");
 var userStore = require("../../stores/userStore.js");
 var browserHistory = ReactRouter.browserHistory;
 /*****COMPONENTS*****/
-// var TimeInput = require('../dashboard/timeinput');
-// var TimeSheet = require('../dashboard/timesheet');
-// var TotalSheet = require('../dashboard/totalsheet');
+var TimeInput = require('./dashboard/timeinput.jsx');
+// var TimeSheet = require('./dashboard/timesheet.jsx');
+var TotalSheet = require('./dashboard/totalsheet.jsx');
 
 var Dashboard = React.createClass({
 
   render: function() {
     return (
-<h1>Dashboard</h1>
+      <div>
+        <TotalSheet/>
+        <TimeInput/>
+      </div>
     );
   }
 });
