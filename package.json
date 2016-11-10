@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "Time keeping project for jet2",
   "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+    "scripts": {
+      "test": "mocha tests/authentication.js",
+      "start": "node app.js"
+    },
   "author": "",
   "license": "ISC",
   "dependencies": {
