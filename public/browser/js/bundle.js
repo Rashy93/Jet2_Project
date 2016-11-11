@@ -28908,7 +28908,7 @@
 	/*****COMPONENTS*****/
 	var TimeInput = __webpack_require__(265);
 	// var TimeSheet = require('./dashboard/timesheet.jsx');
-	var TotalSheet = __webpack_require__(267);
+	var TotalSheet = __webpack_require__(269);
 
 	var Dashboard = React.createClass({
 	  displayName: 'Dashboard',
@@ -28939,6 +28939,7 @@
 	var userStore = __webpack_require__(232);
 	var browserHistory = ReactRouter.browserHistory;
 	var TimeSheet = __webpack_require__(266);
+	var TimeStore = __webpack_require__(267);
 
 	var TimeInput = React.createClass({
 	  displayName: 'TimeInput',
@@ -28953,14 +28954,14 @@
 	      }
 	    };
 	  },
-	  // componentDidMount: function() {
-	  //   TimeStore.on("getTimedata", function() {
-	  //     this.setState({
-	  //       sheet: TimeStore.getTimeSheets(),
-	  //       loader: false,
-	  //     })
-	  //   }.bind(this));
-	  // },
+	  componentDidMount: function componentDidMount() {
+	    TimeStore.on("getTimeSheets", function () {
+	      this.setState({
+	        sheet: TimeStore.getTimeSheets(),
+	        loader: false
+	      });
+	    }.bind(this));
+	  },
 	  handleSave: function handleSave() {
 	    React.createElement(TimeSheet, { sheet: this.props.sheet });
 	  },
@@ -29143,6 +29144,80 @@
 
 /***/ },
 /* 267 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var EventEmitter = __webpack_require__(260).EventEmitter;
+	var merge = __webpack_require__(233);
+	var Dispatcher = __webpack_require__(228);
+	var axios = __webpack_require__(235);
+	var getToken = __webpack_require__(268);
+	var _timesheets = [];
+
+	var TimeStore = merge(EventEmitter.prototype, {
+	  // function that gets the data of all TimeSheet.
+	  getTimeSheets: function getTimeSheets() {
+	    console.log("getting timesheet data");
+	    return _timesheets;
+	  }
+	});
+
+	module.exports = TimeStore;
+
+	Dispatcher.register(handleClick);
+
+	function handleClick(payload) {
+	  if (payload.action == "getTimeSheets") {
+	    return getTimeSheets();
+	  }
+
+	  function createTimeSheet() {
+	    axios({
+	      method: 'POST',
+	      url: '/api/timesheet/' + _timesheets,
+	      headers: {
+	        'token': getToken()
+	      }
+	    }).then(function (response) {
+	      console.log(response);
+	      _timesheets = response.data.sheet;
+	      return TimeStore.emit("getTimeSheets");
+	    });
+	  }
+	  //create an axios request to post your timesheet data
+
+	  //_timesheets.push(res.data);
+	  //TimeStore.emit(/*Constant Name*/)
+	}
+
+	function getTimeSheets() {
+
+	  axios({
+	    method: 'GET',
+	    url: '/api/timesheet/' + _timesheets,
+	    headers: {
+	      'token': getToken()
+	    }
+	  }).then(function (response) {
+	    console.log(response);
+	    _timesheets = response.data.sheet;
+	    return TimeStore.emit("getTimeSheets");
+	  });
+	}
+
+/***/ },
+/* 268 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	module.exports = function () {
+	  return localStorage.getItem('token') || "";
+	};
+
+/***/ },
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

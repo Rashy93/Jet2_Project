@@ -5,6 +5,7 @@ var MainConstant = require("../../../constants/mainConstant"); // requiring cons
 var userStore = require("../../../stores/userStore.js");
 var browserHistory = ReactRouter.browserHistory;
 var TimeSheet = require('./timesheet.jsx');
+var TimeStore = require("../../../stores/timeStore.js");
 
 var TimeInput = React.createClass({
   getInitialState: function() {
@@ -17,14 +18,14 @@ var TimeInput = React.createClass({
     }
   }
 },
-// componentDidMount: function() {
-//   TimeStore.on("getTimedata", function() {
-//     this.setState({
-//       sheet: TimeStore.getTimeSheets(),
-//       loader: false,
-//     })
-//   }.bind(this));
-// },
+componentDidMount: function() {
+  TimeStore.on("getTimeSheets", function() {
+    this.setState({
+      sheet: TimeStore.getTimeSheets(),
+      loader: false,
+    })
+  }.bind(this));
+},
   handleSave: function(){
     <TimeSheet sheet={this.props.sheet} />
   },
