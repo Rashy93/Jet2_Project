@@ -25,7 +25,14 @@ function handleClick(payload) {
 
 }
 
-function getCvData(){
+function createTimeSheet(){
+  //create an axios request to post your timesheet data
+
+  //_timesheets.push(res.data);
+  //TimeStore.emit(/*Constant Name*/)
+}
+
+function getTimeSheets(){
 
  axios({
     method : 'GET',
@@ -36,7 +43,7 @@ function getCvData(){
   }).then(function(response){
     console.log(response);
     _currentProfile = response.data.spartan;
-    return SpartanStore.emit("getCVdata");
+    return TimeStore.emit("getCVdata");
   })
 }
 

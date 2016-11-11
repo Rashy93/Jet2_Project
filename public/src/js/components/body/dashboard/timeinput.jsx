@@ -4,8 +4,7 @@ var ReactRouter = require('react-router');
 var MainConstant = require("../../../constants/mainConstant"); // requiring constant
 var userStore = require("../../../stores/userStore.js");
 var browserHistory = ReactRouter.browserHistory;
-var TimeSheet = require('./timeSheet.jsx');
-var timesheetc = "";
+var TimeSheet = require('./timesheet.jsx');
 
 var TimeInput = React.createClass({
   getInitialState: function() {
@@ -27,7 +26,7 @@ var TimeInput = React.createClass({
 //   }.bind(this));
 // },
   handleSave: function(){
-    timesheetc = <TimeSheet sheet={this.props.sheet} />
+    <TimeSheet sheet={this.props.sheet} />
   },
   render: function(){
     return (
@@ -52,7 +51,6 @@ var TimeInput = React.createClass({
           <button onClick={this.handleSave} className="btn btn-primary">Save</button>
           <button className="btn btn-danger">Cancel</button>
         </div>
-        {timesheetc}
       </section>
 
     )

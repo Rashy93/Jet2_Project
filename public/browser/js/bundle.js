@@ -28938,8 +28938,7 @@
 	var MainConstant = __webpack_require__(231); // requiring constant
 	var userStore = __webpack_require__(232);
 	var browserHistory = ReactRouter.browserHistory;
-	var TimeSheet = __webpack_require__(268);
-	var timesheetc = "";
+	var TimeSheet = __webpack_require__(266);
 
 	var TimeInput = React.createClass({
 	  displayName: 'TimeInput',
@@ -28963,7 +28962,7 @@
 	  //   }.bind(this));
 	  // },
 	  handleSave: function handleSave() {
-	    timesheetc = React.createElement(TimeSheet, { sheet: this.props.sheet });
+	    React.createElement(TimeSheet, { sheet: this.props.sheet });
 	  },
 	  render: function render() {
 	    return React.createElement(
@@ -29020,8 +29019,7 @@
 	          { className: 'btn btn-danger' },
 	          'Cancel'
 	        )
-	      ),
-	      timesheetc
+	      )
 	    );
 	  }
 	});
@@ -29029,62 +29027,7 @@
 	module.exports = TimeInput;
 
 /***/ },
-/* 266 */,
-/* 267 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-	var Dispatcher = __webpack_require__(228); // requiring dispatcher
-	var ReactRouter = __webpack_require__(172);
-	var MainConstant = __webpack_require__(231); // requiring constant
-	var userStore = __webpack_require__(232);
-	var browserHistory = ReactRouter.browserHistory;
-
-	var TotalSheet = React.createClass({
-	  displayName: 'TotalSheet',
-
-
-	  render: function render() {
-	    return React.createElement(
-	      'section',
-	      null,
-	      React.createElement(
-	        'div',
-	        { className: 'panel panel-default' },
-	        React.createElement(
-	          'div',
-	          { className: 'panel-heading' },
-	          React.createElement(
-	            'h1',
-	            { className: 'text-center' },
-	            'Total Time'
-	          )
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'panel-body' },
-	          React.createElement(
-	            'h1',
-	            { className: 'text-center' },
-	            'Hours'
-	          )
-	        )
-	      ),
-	      React.createElement(
-	        'button',
-	        { className: 'btn btn-primary' },
-	        'Log Time'
-	      )
-	    );
-	  }
-	});
-
-	module.exports = TotalSheet;
-
-/***/ },
-/* 268 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29197,6 +29140,60 @@
 	});
 
 	module.exports = TimeSheet;
+
+/***/ },
+/* 267 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var Dispatcher = __webpack_require__(228); // requiring dispatcher
+	var ReactRouter = __webpack_require__(172);
+	var MainConstant = __webpack_require__(231); // requiring constant
+	var userStore = __webpack_require__(232);
+	var browserHistory = ReactRouter.browserHistory;
+
+	var TotalSheet = React.createClass({
+	  displayName: 'TotalSheet',
+
+
+	  render: function render() {
+	    return React.createElement(
+	      'section',
+	      null,
+	      React.createElement(
+	        'div',
+	        { className: 'panel panel-default' },
+	        React.createElement(
+	          'div',
+	          { className: 'panel-heading' },
+	          React.createElement(
+	            'h1',
+	            { className: 'text-center' },
+	            'Total Time'
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'panel-body' },
+	          React.createElement(
+	            'h1',
+	            { className: 'text-center' },
+	            'Hours'
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'button',
+	        { className: 'btn btn-primary' },
+	        'Log Time'
+	      )
+	    );
+	  }
+	});
+
+	module.exports = TotalSheet;
 
 /***/ }
 /******/ ]);
