@@ -27,31 +27,44 @@ componentDidMount: function() {
   }.bind(this));
 },
   handleSave: function(){
-    <TimeSheet sheet={this.props.sheet} />
+    console.log(this.state.sheet);
+    //Dispatch the state for the store to listen
+    Dispatcher.dispatch({
+      action: MainConstant.TIMESHEET.CREATE,
+      sheet: this.state.sheet,
+      user: userStore.getUser()._id
+    });
+  },
+  handleChange: function(e){
+    this.state.sheet[e.target.name] = e.target.value;
   },
   render: function(){
     return (
       <section>
+        <div className="container">
         <div className="form-horizontal">
           <div className="form-group">
             <div className="col-sm-6">
               <label>Date</label>
-              <input type="date" className="form-control" placeholder="Date"/>
+              <input type="date" name="date" className="form-control" placeholder="Date" onChange={this.handleChange}/>
             </div>
             <div className="col-sm-6">
               <label>Hours</label>
-              <input type="number" className="form-control" placeholder="Hours"/>
+              <input type="number" name="hours" className="form-control" placeholder="Hours" onChange={this.handleChange}/>
             </div>
           </div>
           <div className="form-group">
             <div className="col-sm-12">
               <label>Comment</label>
-              <input type="text" className="form-control" placeholder="Comment"/>
+              <input type="text" name="comment" className="form-control" placeholder="Comment" onChange={this.handleChange}/>
             </div>
           </div>
-          <button onClick={this.handleSave} className="btn btn-primary">Save</button>
+          <input className="btn btn-primary" type="button"  value="Save" onClick={this.handleSave}/>
           <button className="btn btn-danger">Cancel</button>
         </div>
+      </div>
+      <hr></hr>
+
       </section>
 
     )

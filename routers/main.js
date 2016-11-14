@@ -1,6 +1,7 @@
 var express = require('express'),
     router = express.Router(),
-    authenticationController = require('../controllers/authentication');
+    authenticationController = require('../controllers/authentication'),
+    timesheet = require('../controllers/timesheet');
 
 // AUTH ROUTES -----------------------------------------------------------------
 // Method to allow a user to login from a form
@@ -12,7 +13,7 @@ router.route("/register")
   .post(authenticationController.register);
 // -----------------------------------------------------------------------------
 
-// USERS ROUTES ----------------------------------------------------------------
-// -----------------------------------------------------------------------------
-
+router.route("/timesheet")
+  .post(timesheet.create);
+  
 module.exports = router;

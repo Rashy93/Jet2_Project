@@ -4,6 +4,7 @@ var timeSheetSchema = mongoose.Schema({
   date:       { type: String },
   hours:      { type: String },
   totalHours: { type: String },
+  comment:    { type: String },
   approval:   { type: Boolean}
 });
 

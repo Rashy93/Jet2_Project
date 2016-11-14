@@ -35,37 +35,32 @@ var Login = React.createClass({
   },
   render: function(){
     return (
-      <div className="row">
-        <div className="large-5 large-centered columns">
-          <div className="signup-panel">
-            <form onSubmit={this.handleSubmit}>
-              <div className="row collapse">
-                <div className="small-2 columns">
-                  <span className="prefix"><i className="fi-mail"></i></span>
-                </div>
-                <div className="small-10  columns">
-                  <input type="text" placeholder="email" name="email" onChange={this.handleChange}/>
-                </div>
+      <form onSubmit={this.handleSubmit}>
+
+      <div className="modal-dialog">
+          <div className="modal-content">
+              <div className="modal-header">
+                <h1 className="text-center">Tract</h1>
               </div>
-              <div className="row collapse">
-                <div className="small-2 columns ">
-                  <span className="prefix"><i className="fi-lock"></i></span>
-                </div>
-                <div className="small-10 columns ">
-                  <input type="password" placeholder="password" name="password" onChange={this.handleChange}/>
-                </div>
-                <div className="small-10 columns ">
-                  <button type="submit" className="expanded button" >Login</button>
-                  <p className="signup">Don't have an account? <a href="/register">Register here</a></p>
-                </div>
-              </div>
-            </form>
-              {
-                (this.state.error) ? (<div>{this.state.error}</div>) : ""
-              }
+               <div className="modal-body">
+                 <div className="form-group">
+                       <input type="text" className="form-control input-lg" placeholder="email" onChange={this.handleChange}/>
+                   <div className="form-group">
+                       <input type="password" className="form-control input-lg" placeholder="password" onChange={this.handleChange}/>
+
+                   <div className="form-group">
+                       <input type="submit" className="btn btn-block btn-lg btn-primary" value="Login"/>
+                       <span className="pull-right"><a href="#">Register</a></span><span><a href="#">Forgot Password</a></span>
+
+
+               </div>
+             </div>
+               </div>
+
+               </div>
           </div>
-        </div>
        </div>
+     </form>
 
     )
   }

@@ -7,60 +7,66 @@ var browserHistory = ReactRouter.browserHistory;
 
 var TimeSheet = React.createClass({
   getInitialState: function(){
-      return{
-        sheet: this.props.sheet
-      }
+    return{
+      sheet: this.props.sheet
+    }
   },
-  render: function(){
-    return (
-      <section>
-        <div>
-             <router-view></router-view>
-             <div className="time-entries">
-               <p><strong>No time entries yet</strong></p>
-               <div className="list-group">
+//   handleCallback: function(sheet){
+//     this.setState({
+//       sheet: {
+//         date:     "",
+//         hours:    "",
+//         comment:  ""
+//       }
+//     })
+// },
+render: function(){
+  this.state.sheet = this.props.sheet;
 
-                 <a className="list-group-item" htmlFor="timeEntry in timeEntries">
-                   <div className="row">
+return (
+<section>
+  <div>
+    <router-view></router-view>
+    <div className="time-entries">
+      <br></br>
+      <div className="list-group">
 
-                     <div className="col-sm-2 user-details">
-                       <img className="avatar img-circle img-responsive" />
-                       <p className="text-center">
-                         <strong>
-          // Picture
-                         </strong>
-                       </p>
-                     </div>
+        <a className="list-group-item" htmlFor="timeEntry in timeEntries">
+          <div className="row">
 
-                     <div className="col-sm-2 text-center time-block">
-                       <h3 className="list-group-item-text total-time">
-                         <i className="glyphicon glyphicon-time"></i>
-                         8
-                         <small>hours</small>
-                       </h3>
-                       <p className="label label-primary text-center">
-                         <i className="glyphicon glyphicon-calendar"></i>
-                         2016-11-19
-                       </p>
-                     </div>
+            <div className="col-sm-2 user-details">
+              <img src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAkSAAAAJDU0ZjcwZWM3LTFmMmItNGI4OC04MWZiLWQyMzQyZjk1YWJmOA.jpg" className="avatar img-circle img-responsive"  />
+              <div className="text-center">
+                <p className="label label-primary text-center">
+                  <i className="glyphicon glyphicon-calendar"></i>
+                  {this.state.date}
+                </p>
+              </div>
+            </div>
 
-                     <div className="col-sm-7 comment-section">
-                       <p>Comment:{this.state.sheet}</p>
-                     </div>
+            <div className="col-sm-2 text-center time-block">
+              <h3 className="list-group-item-text total-time">
+                <i className="glyphicon glyphicon-time"></i>
+                  {this.state.hours}5.5<br></br><small>hours</small>
+              </h3>
+            </div>
 
-                     <div className="col-sm-1">
-                       <button className="btn btn-xs btn-danger delete-button"> Cancel </button>
-                     </div>
+            <div className="col-sm-7 comment-section">
+              <h4>Comment: Project-1</h4>
+            </div>
+            <div className="col-sm-1" id="button12">
+              <button type="button" className=" btn btn-xs btn  btn-info">Update</button>
+              <button className="btn btn-xs btn-danger delete-button"> Cancel </button>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
 
-                   </div>
-                 </a>
-         </div>
-       </div>
-     </div>
-      </section>
-
-    )
-  }
+)
+}
 });
 
 module.exports = TimeSheet;

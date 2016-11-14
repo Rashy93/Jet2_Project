@@ -6,16 +6,29 @@ var userStore = require("../../stores/userStore.js");
 var browserHistory = ReactRouter.browserHistory;
 /*****COMPONENTS*****/
 var TimeInput = require('./dashboard/timeinput.jsx');
-// var TimeSheet = require('./dashboard/timesheet.jsx');
+var TimeSheet = require('./dashboard/timesheet.jsx');
 var TotalSheet = require('./dashboard/totalsheet.jsx');
 
 var Dashboard = React.createClass({
-
+  getInitialState: function(){
+    return{
+      sheet: {
+        date:     "",
+        hours:    "",
+        comment:  ""
+      }
+    }
+  },
   render: function() {
     return (
       <div>
         <TotalSheet/>
-        <TimeInput/>
+        <TimeInput sheet={this.state.sheet}/>
+        <TimeSheet/>
+        <TimeSheet/>
+        <TimeSheet/>
+
+
       </div>
     );
   }

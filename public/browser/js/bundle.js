@@ -58,6 +58,9 @@
 	var Login = __webpack_require__(227);
 	var Main = __webpack_require__(261);
 	var Dashboard = __webpack_require__(264);
+	var TimeList = __webpack_require__(270);
+
+	__webpack_require__(271);
 
 	var App = React.createClass({
 	  displayName: 'App',
@@ -66,12 +69,13 @@
 	    return React.createElement(
 	      Router,
 	      { history: browserHistory },
-	      React.createElement(Route, { path: '/Login', component: Login }),
+	      React.createElement(Route, { path: '/login', component: Login }),
 	      React.createElement(
 	        Route,
 	        { path: '/', component: Main },
 	        React.createElement(IndexRoute, { component: Dashboard })
-	      )
+	      ),
+	      React.createElement(Route, { path: '/approval', component: TimeList })
 	    );
 	  }
 	});
@@ -26395,78 +26399,60 @@
 	  },
 	  render: function render() {
 	    return React.createElement(
-	      'div',
-	      { className: 'row' },
+	      'form',
+	      { onSubmit: this.handleSubmit },
 	      React.createElement(
 	        'div',
-	        { className: 'large-5 large-centered columns' },
+	        { className: 'modal-dialog' },
 	        React.createElement(
 	          'div',
-	          { className: 'signup-panel' },
+	          { className: 'modal-content' },
 	          React.createElement(
-	            'form',
-	            { onSubmit: this.handleSubmit },
+	            'div',
+	            { className: 'modal-header' },
+	            React.createElement(
+	              'h1',
+	              { className: 'text-center' },
+	              'Tract'
+	            )
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'modal-body' },
 	            React.createElement(
 	              'div',
-	              { className: 'row collapse' },
+	              { className: 'form-group' },
+	              React.createElement('input', { type: 'text', className: 'form-control input-lg', placeholder: 'email', onChange: this.handleChange }),
 	              React.createElement(
 	                'div',
-	                { className: 'small-2 columns' },
+	                { className: 'form-group' },
+	                React.createElement('input', { type: 'password', className: 'form-control input-lg', placeholder: 'password', onChange: this.handleChange }),
 	                React.createElement(
-	                  'span',
-	                  { className: 'prefix' },
-	                  React.createElement('i', { className: 'fi-mail' })
-	                )
-	              ),
-	              React.createElement(
-	                'div',
-	                { className: 'small-10  columns' },
-	                React.createElement('input', { type: 'text', placeholder: 'email', name: 'email', onChange: this.handleChange })
-	              )
-	            ),
-	            React.createElement(
-	              'div',
-	              { className: 'row collapse' },
-	              React.createElement(
-	                'div',
-	                { className: 'small-2 columns ' },
-	                React.createElement(
-	                  'span',
-	                  { className: 'prefix' },
-	                  React.createElement('i', { className: 'fi-lock' })
-	                )
-	              ),
-	              React.createElement(
-	                'div',
-	                { className: 'small-10 columns ' },
-	                React.createElement('input', { type: 'password', placeholder: 'password', name: 'password', onChange: this.handleChange })
-	              ),
-	              React.createElement(
-	                'div',
-	                { className: 'small-10 columns ' },
-	                React.createElement(
-	                  'button',
-	                  { type: 'submit', className: 'expanded button' },
-	                  'Login'
-	                ),
-	                React.createElement(
-	                  'p',
-	                  { className: 'signup' },
-	                  'Don\'t have an account? ',
+	                  'div',
+	                  { className: 'form-group' },
+	                  React.createElement('input', { type: 'submit', className: 'btn btn-block btn-lg btn-primary', value: 'Login' }),
 	                  React.createElement(
-	                    'a',
-	                    { href: '/register' },
-	                    'Register here'
+	                    'span',
+	                    { className: 'pull-right' },
+	                    React.createElement(
+	                      'a',
+	                      { href: '#' },
+	                      'Register'
+	                    )
+	                  ),
+	                  React.createElement(
+	                    'span',
+	                    null,
+	                    React.createElement(
+	                      'a',
+	                      { href: '#' },
+	                      'Forgot Password'
+	                    )
 	                  )
 	                )
 	              )
 	            )
-	          ),
-	          this.state.error ? React.createElement(
-	            'div',
-	            null,
-	            this.state.error
-	          ) : ""
+	          )
 	        )
 	      )
 	    );
@@ -26760,6 +26746,18 @@
 	      LOGOUT: "USER ERROR LOGOUT"
 	    },
 	    DELETE: "USER DELETE"
+	  },
+	  TIMESHEET: {
+	    CREATE: "TIMESHEET CREATE",
+	    UPDATE: {
+	      // When you press save, use this constant to echo that you want this ONE timesheet to update when EMMITED from store
+	      ONE: "TIMESHEET UPDATE ONE",
+	      /*
+	        On approval user, when you want to view ALL timesheets and recieved back a call from the server,
+	        EMIT this constant to update the page
+	      */
+	      ALL: "TIMESHEET UPDATE ALL"
+	    }
 	  }
 	};
 
@@ -28907,19 +28905,30 @@
 	var browserHistory = ReactRouter.browserHistory;
 	/*****COMPONENTS*****/
 	var TimeInput = __webpack_require__(265);
-	// var TimeSheet = require('./dashboard/timesheet.jsx');
+	var TimeSheet = __webpack_require__(266);
 	var TotalSheet = __webpack_require__(269);
 
 	var Dashboard = React.createClass({
 	  displayName: 'Dashboard',
 
-
+	  getInitialState: function getInitialState() {
+	    return {
+	      sheet: {
+	        date: "",
+	        hours: "",
+	        comment: ""
+	      }
+	    };
+	  },
 	  render: function render() {
 	    return React.createElement(
 	      'div',
 	      null,
 	      React.createElement(TotalSheet, null),
-	      React.createElement(TimeInput, null)
+	      React.createElement(TimeInput, { sheet: this.state.sheet }),
+	      React.createElement(TimeSheet, null),
+	      React.createElement(TimeSheet, null),
+	      React.createElement(TimeSheet, null)
 	    );
 	  }
 	});
@@ -28963,7 +28972,16 @@
 	    }.bind(this));
 	  },
 	  handleSave: function handleSave() {
-	    React.createElement(TimeSheet, { sheet: this.props.sheet });
+	    console.log(this.state.sheet);
+	    //Dispatch the state for the store to listen
+	    Dispatcher.dispatch({
+	      action: MainConstant.TIMESHEET.CREATE,
+	      sheet: this.state.sheet,
+	      user: userStore.getUser()._id
+	    });
+	  },
+	  handleChange: function handleChange(e) {
+	    this.state.sheet[e.target.name] = e.target.value;
 	  },
 	  render: function render() {
 	    return React.createElement(
@@ -28971,56 +28989,57 @@
 	      null,
 	      React.createElement(
 	        'div',
-	        { className: 'form-horizontal' },
+	        { className: 'container' },
 	        React.createElement(
 	          'div',
-	          { className: 'form-group' },
+	          { className: 'form-horizontal' },
 	          React.createElement(
 	            'div',
-	            { className: 'col-sm-6' },
+	            { className: 'form-group' },
 	            React.createElement(
-	              'label',
-	              null,
-	              'Date'
+	              'div',
+	              { className: 'col-sm-6' },
+	              React.createElement(
+	                'label',
+	                null,
+	                'Date'
+	              ),
+	              React.createElement('input', { type: 'date', name: 'date', className: 'form-control', placeholder: 'Date', onChange: this.handleChange })
 	            ),
-	            React.createElement('input', { type: 'date', className: 'form-control', placeholder: 'Date' })
+	            React.createElement(
+	              'div',
+	              { className: 'col-sm-6' },
+	              React.createElement(
+	                'label',
+	                null,
+	                'Hours'
+	              ),
+	              React.createElement('input', { type: 'number', name: 'hours', className: 'form-control', placeholder: 'Hours', onChange: this.handleChange })
+	            )
 	          ),
 	          React.createElement(
 	            'div',
-	            { className: 'col-sm-6' },
+	            { className: 'form-group' },
 	            React.createElement(
-	              'label',
-	              null,
-	              'Hours'
-	            ),
-	            React.createElement('input', { type: 'number', className: 'form-control', placeholder: 'Hours' })
-	          )
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'form-group' },
+	              'div',
+	              { className: 'col-sm-12' },
+	              React.createElement(
+	                'label',
+	                null,
+	                'Comment'
+	              ),
+	              React.createElement('input', { type: 'text', name: 'comment', className: 'form-control', placeholder: 'Comment', onChange: this.handleChange })
+	            )
+	          ),
+	          React.createElement('input', { className: 'btn btn-primary', type: 'button', value: 'Save', onClick: this.handleSave }),
 	          React.createElement(
-	            'div',
-	            { className: 'col-sm-12' },
-	            React.createElement(
-	              'label',
-	              null,
-	              'Comment'
-	            ),
-	            React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Comment' })
+	            'button',
+	            { className: 'btn btn-danger' },
+	            'Cancel'
 	          )
-	        ),
-	        React.createElement(
-	          'button',
-	          { onClick: this.handleSave, className: 'btn btn-primary' },
-	          'Save'
-	        ),
-	        React.createElement(
-	          'button',
-	          { className: 'btn btn-danger' },
-	          'Cancel'
 	        )
-	      )
+	      ),
+	      React.createElement('hr', null)
 	    );
 	  }
 	});
@@ -29048,7 +29067,18 @@
 	      sheet: this.props.sheet
 	    };
 	  },
+	  //   handleCallback: function(sheet){
+	  //     this.setState({
+	  //       sheet: {
+	  //         date:     "",
+	  //         hours:    "",
+	  //         comment:  ""
+	  //       }
+	  //     })
+	  // },
 	  render: function render() {
+	    this.state.sheet = this.props.sheet;
+
 	    return React.createElement(
 	      'section',
 	      null,
@@ -29059,15 +29089,7 @@
 	        React.createElement(
 	          'div',
 	          { className: 'time-entries' },
-	          React.createElement(
-	            'p',
-	            null,
-	            React.createElement(
-	              'strong',
-	              null,
-	              'No time entries yet'
-	            )
-	          ),
+	          React.createElement('br', null),
 	          React.createElement(
 	            'div',
 	            { className: 'list-group' },
@@ -29080,14 +29102,15 @@
 	                React.createElement(
 	                  'div',
 	                  { className: 'col-sm-2 user-details' },
-	                  React.createElement('img', { className: 'avatar img-circle img-responsive' }),
+	                  React.createElement('img', { src: 'https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAkSAAAAJDU0ZjcwZWM3LTFmMmItNGI4OC04MWZiLWQyMzQyZjk1YWJmOA.jpg', className: 'avatar img-circle img-responsive' }),
 	                  React.createElement(
-	                    'p',
+	                    'div',
 	                    { className: 'text-center' },
 	                    React.createElement(
-	                      'strong',
-	                      null,
-	                      '// Picture'
+	                      'p',
+	                      { className: 'label label-primary text-center' },
+	                      React.createElement('i', { className: 'glyphicon glyphicon-calendar' }),
+	                      this.state.date
 	                    )
 	                  )
 	                ),
@@ -29098,33 +29121,33 @@
 	                    'h3',
 	                    { className: 'list-group-item-text total-time' },
 	                    React.createElement('i', { className: 'glyphicon glyphicon-time' }),
-	                    '8',
+	                    this.state.hours,
+	                    '5.5',
+	                    React.createElement('br', null),
 	                    React.createElement(
 	                      'small',
 	                      null,
 	                      'hours'
 	                    )
-	                  ),
-	                  React.createElement(
-	                    'p',
-	                    { className: 'label label-primary text-center' },
-	                    React.createElement('i', { className: 'glyphicon glyphicon-calendar' }),
-	                    '2016-11-19'
 	                  )
 	                ),
 	                React.createElement(
 	                  'div',
 	                  { className: 'col-sm-7 comment-section' },
 	                  React.createElement(
-	                    'p',
+	                    'h4',
 	                    null,
-	                    'Comment:',
-	                    this.state.sheet
+	                    'Comment: Project-1'
 	                  )
 	                ),
 	                React.createElement(
 	                  'div',
-	                  { className: 'col-sm-1' },
+	                  { className: 'col-sm-1', id: 'button12' },
+	                  React.createElement(
+	                    'button',
+	                    { type: 'button', className: ' btn btn-xs btn  btn-info' },
+	                    'Update'
+	                  ),
 	                  React.createElement(
 	                    'button',
 	                    { className: 'btn btn-xs btn-danger delete-button' },
@@ -29151,8 +29174,10 @@
 	var EventEmitter = __webpack_require__(260).EventEmitter;
 	var merge = __webpack_require__(233);
 	var Dispatcher = __webpack_require__(228);
+	var MainConstant = __webpack_require__(231);
 	var axios = __webpack_require__(235);
 	var getToken = __webpack_require__(268);
+
 	var _timesheets = [];
 
 	var TimeStore = merge(EventEmitter.prototype, {
@@ -29170,39 +29195,54 @@
 	function handleClick(payload) {
 	  if (payload.action == "getTimeSheets") {
 	    return getTimeSheets();
+	  } else if (payload.action === MainConstant.TIMESHEET.CREATE) {
+	    createTimeSheet(payload.sheet, payload.user);
 	  }
-
-	  function createTimeSheet() {
-	    axios({
-	      method: 'POST',
-	      url: '/api/timesheet/' + _timesheets,
-	      headers: {
-	        'token': getToken()
-	      }
-	    }).then(function (response) {
-	      console.log(response);
-	      _timesheets = response.data.sheet;
-	      return TimeStore.emit("getTimeSheets");
-	    });
-	  }
-	  //create an axios request to post your timesheet data
-
-	  //_timesheets.push(res.data);
-	  //TimeStore.emit(/*Constant Name*/)
 	}
 
-	function getTimeSheets() {
-
+	function createTimeSheet(sheet, user) {
+	  console.log(getToken());
 	  axios({
-	    method: 'GET',
-	    url: '/api/timesheet/' + _timesheets,
+	    method: 'POST',
+	    url: '/api/timesheet',
+	    data: {
+	      sheet: sheet,
+	      id: user
+	    },
 	    headers: {
 	      'token': getToken()
 	    }
 	  }).then(function (response) {
 	    console.log(response);
-	    _timesheets = response.data.sheet;
-	    return TimeStore.emit("getTimeSheets");
+	    _timesheets.push(response.data);
+	    TimeStore.emit("getTimeSheets");
+	  }).catch(function (err) {
+	    console.log(err);
+	  });
+	}
+	//create an axios request to post your timesheet data
+
+	//_timesheets.push(res.data);
+	//TimeStore.emit(/*Constant Name*/)
+
+	function getTimeSheets() {
+
+	  axios({
+	    method: 'POST',
+	    url: '/api/timesheet',
+	    data: {
+	      sheet: sheet,
+	      id: user
+	    },
+	    headers: {
+	      'token': getToken()
+	    }
+	  }).then(function (response) {
+	    console.log(response);
+	    _timesheets.push(response.data);
+	    TimeStore.emit("getTimeSheets");
+	  }).catch(function (err) {
+	    console.log(err);
 	  });
 	}
 
@@ -29239,36 +29279,654 @@
 	      null,
 	      React.createElement(
 	        'div',
-	        { className: 'panel panel-default' },
+	        { className: 'container' },
 	        React.createElement(
 	          'div',
-	          { className: 'panel-heading' },
+	          { className: 'panel panel-default' },
 	          React.createElement(
-	            'h1',
-	            { className: 'text-center' },
-	            'Total Time'
+	            'div',
+	            { className: 'panel-heading' },
+	            React.createElement(
+	              'h1',
+	              { className: 'text-center' },
+	              'Total Time'
+	            )
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'panel-body' },
+	            React.createElement(
+	              'h1',
+	              { className: 'text-center' },
+	              'Hours'
+	            ),
+	            React.createElement(
+	              'h1',
+	              { className: 'text-center' },
+	              '~24~'
+	            )
 	          )
 	        ),
 	        React.createElement(
-	          'div',
-	          { className: 'panel-body' },
-	          React.createElement(
-	            'h1',
-	            { className: 'text-center' },
-	            'Hours'
-	          )
+	          'button',
+	          { className: 'btn btn-block btn-lg btn-primary' },
+	          'Log Time'
 	        )
 	      ),
-	      React.createElement(
-	        'button',
-	        { className: 'btn btn-primary' },
-	        'Log Time'
-	      )
+	      React.createElement('hr', null)
 	    );
 	  }
 	});
 
 	module.exports = TotalSheet;
+
+/***/ },
+/* 270 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var Dispatcher = __webpack_require__(228); // requiring dispatcher
+	var ReactRouter = __webpack_require__(172);
+	var MainConstant = __webpack_require__(231); // requiring constant
+	var userStore = __webpack_require__(232);
+	var browserHistory = ReactRouter.browserHistory;
+
+	var TimeList = React.createClass({
+	  displayName: 'TimeList',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      sheet: this.props.sheet
+	    };
+	  },
+	  //   handleCallback: function(sheet){
+	  //     this.setState({
+	  //       sheet: {
+	  //         date:     "",
+	  //         hours:    "",
+	  //         comment:  ""
+	  //       }
+	  //     })
+	  // },
+	  render: function render() {
+	    this.state.sheet = this.props.sheet;
+
+	    return React.createElement(
+	      'section',
+	      null,
+	      React.createElement(
+	        'div',
+	        null,
+	        React.createElement('router-view', null),
+	        React.createElement(
+	          'div',
+	          { className: 'time-entries' },
+	          React.createElement('br', null),
+	          React.createElement(
+	            'div',
+	            { className: 'list-group' },
+	            React.createElement(
+	              'a',
+	              { className: 'list-group-item', htmlFor: 'timeEntry in timeEntries' },
+	              React.createElement(
+	                'div',
+	                { className: 'row' },
+	                React.createElement(
+	                  'div',
+	                  { className: 'col-sm-2 user-details' },
+	                  React.createElement('img', { src: 'https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAkSAAAAJDU0ZjcwZWM3LTFmMmItNGI4OC04MWZiLWQyMzQyZjk1YWJmOA.jpg', className: 'avatar img-circle img-responsive' }),
+	                  React.createElement(
+	                    'div',
+	                    { className: 'text-center' },
+	                    React.createElement(
+	                      'p',
+	                      { className: 'label label-primary text-center' },
+	                      'RashidAwil'
+	                    )
+	                  )
+	                ),
+	                React.createElement(
+	                  'div',
+	                  { className: 'col-sm-2 text-center time-block' },
+	                  React.createElement(
+	                    'h3',
+	                    { className: 'list-group-item-text total-time' },
+	                    React.createElement('i', { className: 'glyphicon glyphicon-time' }),
+	                    this.state.hours,
+	                    '35.5',
+	                    React.createElement('br', null),
+	                    React.createElement(
+	                      'small',
+	                      null,
+	                      'Total Hours'
+	                    )
+	                  )
+	                ),
+	                React.createElement(
+	                  'div',
+	                  { className: 'text-center' },
+	                  React.createElement(
+	                    'p',
+	                    { className: 'label label-primary text-center' },
+	                    React.createElement('i', { className: 'glyphicon glyphicon-calendar' }),
+	                    this.state.date,
+	                    '12-04-2015 ~ 15-01-2016'
+	                  )
+	                ),
+	                React.createElement('div', { className: 'col-sm-7 comment-section' }),
+	                React.createElement(
+	                  'button',
+	                  { type: 'button', className: 'btn btn-info btn-lg', 'data-toggle': 'modal', 'data-target': '#myModal' },
+	                  'Open Timesheets'
+	                ),
+	                React.createElement(
+	                  'div',
+	                  { className: 'modal fade', id: 'myModal', role: 'dialog' },
+	                  React.createElement(
+	                    'div',
+	                    { className: 'modal-dialog' },
+	                    React.createElement(
+	                      'div',
+	                      { className: 'modal-content' },
+	                      React.createElement(
+	                        'div',
+	                        { className: 'modal-header' },
+	                        React.createElement(
+	                          'button',
+	                          { type: 'button', className: 'close', 'data-dismiss': 'modal' },
+	                          '\xD7'
+	                        ),
+	                        React.createElement(
+	                          'h4',
+	                          { className: 'modal-title' },
+	                          'Timesheet from '
+	                        )
+	                      ),
+	                      React.createElement(
+	                        'div',
+	                        { className: 'modal-body' },
+	                        React.createElement(
+	                          'p',
+	                          null,
+	                          'Some text in the modal.'
+	                        )
+	                      ),
+	                      React.createElement(
+	                        'div',
+	                        { className: 'modal-footer' },
+	                        React.createElement(
+	                          'button',
+	                          { type: 'button', className: 'btn btn-default', 'data-dismiss': 'modal' },
+	                          'Close'
+	                        )
+	                      )
+	                    )
+	                  )
+	                ),
+	                React.createElement(
+	                  'div',
+	                  { className: 'col-sm-1', id: 'button1' },
+	                  React.createElement(
+	                    'button',
+	                    { type: 'button', className: ' btn btn-xs btn btn-success' },
+	                    'Approve'
+	                  ),
+	                  React.createElement('br', null),
+	                  React.createElement(
+	                    'div',
+	                    { className: 'bd-example' },
+	                    React.createElement(
+	                      'button',
+	                      { type: 'button', className: 'btn btn-xs btn-danger delete-button', 'data-toggle': 'modal', 'data-target': '#exampleModal', 'data-whatever': '@mdo' },
+	                      'Reject'
+	                    ),
+	                    React.createElement(
+	                      'div',
+	                      { className: 'modal fade', id: 'exampleModal', tabindex: '-1', role: 'dialog', 'aria-labelledby': 'exampleModalLabel', 'aria-hidden': 'true' },
+	                      React.createElement(
+	                        'div',
+	                        { className: 'modal-dialog', role: 'document' },
+	                        React.createElement(
+	                          'div',
+	                          { className: 'modal-content' },
+	                          React.createElement(
+	                            'div',
+	                            { className: 'modal-header' },
+	                            React.createElement(
+	                              'button',
+	                              { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+	                              React.createElement(
+	                                'span',
+	                                { 'aria-hidden': 'true' },
+	                                '\xD7'
+	                              )
+	                            ),
+	                            React.createElement(
+	                              'h4',
+	                              { className: 'modal-title' },
+	                              'Post to from '
+	                            )
+	                          ),
+	                          React.createElement(
+	                            'div',
+	                            { className: 'modal-body' },
+	                            React.createElement(
+	                              'div',
+	                              null,
+	                              React.createElement(
+	                                'form',
+	                                null,
+	                                React.createElement(
+	                                  'div',
+	                                  { className: 'form-group' },
+	                                  React.createElement(
+	                                    'label',
+	                                    { htmlFor: 'recipient-name', className: 'form-control-label' },
+	                                    'Recipient:'
+	                                  ),
+	                                  React.createElement('input', { type: 'text', className: 'form-control', id: 'recipient-name' })
+	                                ),
+	                                React.createElement(
+	                                  'div',
+	                                  { className: 'form-group' },
+	                                  React.createElement(
+	                                    'label',
+	                                    { htmlFor: 'message-text', className: 'form-control-label' },
+	                                    'Message:'
+	                                  ),
+	                                  React.createElement('textarea', { className: 'form-control', id: 'message-text' })
+	                                )
+	                              )
+	                            ),
+	                            React.createElement(
+	                              'div',
+	                              { 'class': 'modal-footer' },
+	                              React.createElement(
+	                                'button',
+	                                { type: 'button', className: 'btn btn-secondary', 'data-dismiss': 'modal' },
+	                                'Close'
+	                              ),
+	                              React.createElement(
+	                                'button',
+	                                { type: 'button', className: 'btn btn-primary' },
+	                                'Send message'
+	                              )
+	                            )
+	                          ),
+	                          React.createElement(
+	                            'div',
+	                            { className: 'modal-footer' },
+	                            React.createElement(
+	                              'button',
+	                              { type: 'button', className: 'btn btn-default', 'data-dismiss': 'modal' },
+	                              'Close'
+	                            )
+	                          )
+	                        )
+	                      )
+	                    )
+	                  )
+	                )
+	              )
+	            )
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = TimeList;
+
+/***/ },
+/* 271 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(272);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(274)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/sass-loader/index.js!./style.scss", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/sass-loader/index.js!./style.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 272 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(273)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "#logo {\n  height: 60px; }\n\nsmall#hours {\n  display: inherit; }\n\n#button123 {\n  left: 34%;\n  display: inline-flex; }\n\n#button12 {\n  display: inline-flex;\n  right: 7%; }\n\n#button1 {\n  display: inline-flex;\n  left: 52%; }\n\n#round-profile-pic {\n  border-radius: 50%; }\n\n#card-reveal-spartan {\n  background-color: #e6e6e6; }\n\n#card-reveal-client {\n  background-color: #e6e6e6; }\n\n.avatar {\n  height: 75px;\n  margin: 0 auto;\n  margin-top: 10px;\n  margin-bottom: 10px; }\n\n.user-details {\n  background-color: #f5f5f5;\n  border-right: 1px solid #ddd;\n  margin: -10px 0; }\n\n.time-block {\n  padding: 10px; }\n\n.comment-section {\n  padding: 20px; }\n\n#header-title {\n  text-align: center;\n  font-family: \"Open Sans\", sans-serif;\n  text-transform: uppercase;\n  color: #989898; }\n\n#text-banner {\n  text-align: center;\n  font-family: \"Open Sans\", sans-serif;\n  text-transform: uppercase;\n  color: white; }\n\n#text-client {\n  margin: 0;\n  text-align: center;\n  font-family: \"Open Sans\", sans-serif;\n  text-transform: uppercase;\n  color: black;\n  opacity: 1; }\n\n#card-title-spartan {\n  color: orange; }\n\n#card-title-client {\n  color: orange; }\n\n#admin-dashboard {\n  text-align: center; }\n\nbutton#button-update-spartan {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif;\n  margin: 5px; }\n\nbutton#button-delete-spartan {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif;\n  margin: 5px; }\n\nbutton#button-delete-client {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif; }\n\nbutton#button-view-spartan {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif; }\n\nbutton#button-view-spartans {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif; }\n\nbutton#button-view-clients {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif; }\n\nbutton#button-register {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif; }\n\nbutton#button-send-request {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif; }\n\n#button-spartan {\n  text-align: center;\n  font-family: \"Open Sans\", sans-serif; }\n\n#button-client {\n  text-align: center;\n  font-family: \"Open Sans\", sans-serif; }\n\ndiv.card-action {\n  text-align: center; }\n\n.p {\n  font-family: \"Open Sans\", sans-serif; }\n\n#header-nav {\n  font-family: \"Open Sans\", sans-serif; }\n\ndiv.footer {\n  font-family: \"Open Sans\", sans-serif; }\n\n#button-back-spartanlist {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif;\n  margin: 5px; }\n\n#button-update-info {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif;\n  float: right;\n  margin: 5px; }\n\n.profile-image {\n  width: 200px;\n  height: 200px;\n  border-radius: 100px;\n  margin-bottom: 20px; }\n\n#client-image {\n  width: 200px;\n  height: 200px; }\n\n#client-banner {\n  background-size: cover;\n  height: 335px;\n  width: 100%;\n  background-image: url(http://www.medhaid.com/images/our_client/our-clients.jpg);\n  opacity: 0.85; }\n\n#googlemap {\n  padding-top: 50px; }\n\n.grad {\n  background-color: #F2EFEB;\n  background-image: -webkit-gradient(linear, left top, eft bottom, from(#F2EFEB), to(#8e8b87));\n  background-image: -webkit-linear-gradient(top, #F2EFEB, #8e8b87);\n  background-image: -moz-linear-gradient(top, #F2EFEB, #8e8b87);\n  background-image: -ms-linear-gradient(top, #F2EFEB, #8e8b87);\n  background-image: -o-linear-gradient(top, #F2EFEB, #8e8b87);\n  height: auto; }\n\nhr {\n  display: block;\n  border-width: 1px;\n  border-color: #4DB6AC; }\n\n#bio-cv {\n  text-align: left;\n  font-family: \"Open Sans\", sans-serif;\n  font-size: 18px; }\n  #bio-cv .link {\n    text-decoration: underline;\n    font-family: \"Open Sans\", sans-serif; }\n\n.viewBioDescription {\n  position: relative;\n  text-align: center;\n  font-family: \"Open Sans\", sans-serif;\n  border-radius: 5px; }\n  .viewBioDescription .viewBio {\n    text-align: left;\n    font-family: \"Open Sans\", sans-serif;\n    font-style: italic;\n    font-size: 16px; }\n\n.viewJobDescription {\n  position: relative;\n  text-align: center;\n  font-family: \"Open Sans\", sans-serif;\n  border-radius: 5px; }\n  .viewJobDescription .viewWorkExperience {\n    text-align: left;\n    font-family: \"Open Sans\", sans-serif; }\n    .viewJobDescription .viewWorkExperience .job-class {\n      font-style: italic;\n      font-size: 16px; }\n\n.viewEducation {\n  position: relative;\n  text-align: center;\n  font-family: \"Open Sans\", sans-serif;\n  border-radius: 5px; }\n  .viewEducation .viewAllEducation {\n    text-align: left;\n    font-family: \"Open Sans\", sans-serif; }\n    .viewEducation .viewAllEducation .job-class {\n      font-style: italic;\n      font-size: 16px; }\n\n.viewInterest {\n  position: relative;\n  text-align: center;\n  font-family: \"Open Sans\", sans-serif;\n  border-radius: 5px; }\n  .viewInterest .listOfInterest {\n    text-align: left;\n    font-family: \"Open Sans\", sans-serif;\n    font-style: italic;\n    font-size: 16px; }\n\n#header-create-user {\n  text-align: center;\n  font-size: 40px; }\n\n#button-register {\n  margin-top: 15px; }\n\n.label-create-cv {\n  font-size: 18px; }\n\n#header-title {\n  z-index: 1;\n  position: relative; }\n\n#text-banner {\n  position: absolute;\n  top: 10%;\n  left: 0;\n  width: 100%;\n  z-index: 1; }\n\n#site-button {\n  position: absolute;\n  top: 90%;\n  left: 0;\n  width: 100%;\n  z-index: 1; }\n\n#image-banner {\n  position: relative;\n  height: 335px;\n  width: 100%;\n  background-image: url(http://spartaglobal.com/wp-content/uploads/2014/09/New-Dark-Face-Squares.png); }\n\n@media only screen and (max-width: 600px) {\n  #logo {\n    width: 25%;\n    height: 6.5%; }\n  #search-bar {\n    width: 25%; } }\n\n@media only screen and (max-width: 860px) {\n  #search-bar {\n    width: 25%; } }\n\n@media only screen and (max-width: 860px) {\n  #search-bar {\n    width: 25%; } }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 273 */
+/***/ function(module, exports) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	// css base code, injected by the css-loader
+	module.exports = function() {
+		var list = [];
+
+		// return the list of modules as css string
+		list.toString = function toString() {
+			var result = [];
+			for(var i = 0; i < this.length; i++) {
+				var item = this[i];
+				if(item[2]) {
+					result.push("@media " + item[2] + "{" + item[1] + "}");
+				} else {
+					result.push(item[1]);
+				}
+			}
+			return result.join("");
+		};
+
+		// import a list of modules into the list
+		list.i = function(modules, mediaQuery) {
+			if(typeof modules === "string")
+				modules = [[null, modules, ""]];
+			var alreadyImportedModules = {};
+			for(var i = 0; i < this.length; i++) {
+				var id = this[i][0];
+				if(typeof id === "number")
+					alreadyImportedModules[id] = true;
+			}
+			for(i = 0; i < modules.length; i++) {
+				var item = modules[i];
+				// skip already imported module
+				// this implementation is not 100% perfect for weird media query combinations
+				//  when a module is imported multiple times with different media queries.
+				//  I hope this will never occur (Hey this way we have smaller bundles)
+				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+					if(mediaQuery && !item[2]) {
+						item[2] = mediaQuery;
+					} else if(mediaQuery) {
+						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+					}
+					list.push(item);
+				}
+			}
+		};
+		return list;
+	};
+
+
+/***/ },
+/* 274 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	var stylesInDom = {},
+		memoize = function(fn) {
+			var memo;
+			return function () {
+				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+				return memo;
+			};
+		},
+		isOldIE = memoize(function() {
+			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
+		}),
+		getHeadElement = memoize(function () {
+			return document.head || document.getElementsByTagName("head")[0];
+		}),
+		singletonElement = null,
+		singletonCounter = 0,
+		styleElementsInsertedAtTop = [];
+
+	module.exports = function(list, options) {
+		if(false) {
+			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+		}
+
+		options = options || {};
+		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+		// tags it will allow on a page
+		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
+
+		// By default, add <style> tags to the bottom of <head>.
+		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
+
+		var styles = listToStyles(list);
+		addStylesToDom(styles, options);
+
+		return function update(newList) {
+			var mayRemove = [];
+			for(var i = 0; i < styles.length; i++) {
+				var item = styles[i];
+				var domStyle = stylesInDom[item.id];
+				domStyle.refs--;
+				mayRemove.push(domStyle);
+			}
+			if(newList) {
+				var newStyles = listToStyles(newList);
+				addStylesToDom(newStyles, options);
+			}
+			for(var i = 0; i < mayRemove.length; i++) {
+				var domStyle = mayRemove[i];
+				if(domStyle.refs === 0) {
+					for(var j = 0; j < domStyle.parts.length; j++)
+						domStyle.parts[j]();
+					delete stylesInDom[domStyle.id];
+				}
+			}
+		};
+	}
+
+	function addStylesToDom(styles, options) {
+		for(var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+			if(domStyle) {
+				domStyle.refs++;
+				for(var j = 0; j < domStyle.parts.length; j++) {
+					domStyle.parts[j](item.parts[j]);
+				}
+				for(; j < item.parts.length; j++) {
+					domStyle.parts.push(addStyle(item.parts[j], options));
+				}
+			} else {
+				var parts = [];
+				for(var j = 0; j < item.parts.length; j++) {
+					parts.push(addStyle(item.parts[j], options));
+				}
+				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+			}
+		}
+	}
+
+	function listToStyles(list) {
+		var styles = [];
+		var newStyles = {};
+		for(var i = 0; i < list.length; i++) {
+			var item = list[i];
+			var id = item[0];
+			var css = item[1];
+			var media = item[2];
+			var sourceMap = item[3];
+			var part = {css: css, media: media, sourceMap: sourceMap};
+			if(!newStyles[id])
+				styles.push(newStyles[id] = {id: id, parts: [part]});
+			else
+				newStyles[id].parts.push(part);
+		}
+		return styles;
+	}
+
+	function insertStyleElement(options, styleElement) {
+		var head = getHeadElement();
+		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
+		if (options.insertAt === "top") {
+			if(!lastStyleElementInsertedAtTop) {
+				head.insertBefore(styleElement, head.firstChild);
+			} else if(lastStyleElementInsertedAtTop.nextSibling) {
+				head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
+			} else {
+				head.appendChild(styleElement);
+			}
+			styleElementsInsertedAtTop.push(styleElement);
+		} else if (options.insertAt === "bottom") {
+			head.appendChild(styleElement);
+		} else {
+			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
+		}
+	}
+
+	function removeStyleElement(styleElement) {
+		styleElement.parentNode.removeChild(styleElement);
+		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
+		if(idx >= 0) {
+			styleElementsInsertedAtTop.splice(idx, 1);
+		}
+	}
+
+	function createStyleElement(options) {
+		var styleElement = document.createElement("style");
+		styleElement.type = "text/css";
+		insertStyleElement(options, styleElement);
+		return styleElement;
+	}
+
+	function createLinkElement(options) {
+		var linkElement = document.createElement("link");
+		linkElement.rel = "stylesheet";
+		insertStyleElement(options, linkElement);
+		return linkElement;
+	}
+
+	function addStyle(obj, options) {
+		var styleElement, update, remove;
+
+		if (options.singleton) {
+			var styleIndex = singletonCounter++;
+			styleElement = singletonElement || (singletonElement = createStyleElement(options));
+			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
+			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
+		} else if(obj.sourceMap &&
+			typeof URL === "function" &&
+			typeof URL.createObjectURL === "function" &&
+			typeof URL.revokeObjectURL === "function" &&
+			typeof Blob === "function" &&
+			typeof btoa === "function") {
+			styleElement = createLinkElement(options);
+			update = updateLink.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+				if(styleElement.href)
+					URL.revokeObjectURL(styleElement.href);
+			};
+		} else {
+			styleElement = createStyleElement(options);
+			update = applyToTag.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+			};
+		}
+
+		update(obj);
+
+		return function updateStyle(newObj) {
+			if(newObj) {
+				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
+					return;
+				update(obj = newObj);
+			} else {
+				remove();
+			}
+		};
+	}
+
+	var replaceText = (function () {
+		var textStore = [];
+
+		return function (index, replacement) {
+			textStore[index] = replacement;
+			return textStore.filter(Boolean).join('\n');
+		};
+	})();
+
+	function applyToSingletonTag(styleElement, index, remove, obj) {
+		var css = remove ? "" : obj.css;
+
+		if (styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = replaceText(index, css);
+		} else {
+			var cssNode = document.createTextNode(css);
+			var childNodes = styleElement.childNodes;
+			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
+			if (childNodes.length) {
+				styleElement.insertBefore(cssNode, childNodes[index]);
+			} else {
+				styleElement.appendChild(cssNode);
+			}
+		}
+	}
+
+	function applyToTag(styleElement, obj) {
+		var css = obj.css;
+		var media = obj.media;
+
+		if(media) {
+			styleElement.setAttribute("media", media)
+		}
+
+		if(styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = css;
+		} else {
+			while(styleElement.firstChild) {
+				styleElement.removeChild(styleElement.firstChild);
+			}
+			styleElement.appendChild(document.createTextNode(css));
+		}
+	}
+
+	function updateLink(linkElement, obj) {
+		var css = obj.css;
+		var sourceMap = obj.sourceMap;
+
+		if(sourceMap) {
+			// http://stackoverflow.com/a/26603875
+			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+		}
+
+		var blob = new Blob([css], { type: "text/css" });
+
+		var oldSrc = linkElement.href;
+
+		linkElement.href = URL.createObjectURL(blob);
+
+		if(oldSrc)
+			URL.revokeObjectURL(oldSrc);
+	}
+
 
 /***/ }
 /******/ ]);
