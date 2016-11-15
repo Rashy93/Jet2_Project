@@ -9,7 +9,11 @@ var Footer = React.createClass({
 
   render: function() {
     return (
-<h1>Footer</h1>
+      <nav  className="navbar navbar-light" id="nav1">
+        <a className="navbar-brand">
+          Jet2.com
+        </a>
+      </nav>
     );
   }
 });

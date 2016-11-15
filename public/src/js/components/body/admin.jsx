@@ -6,7 +6,7 @@ var userStore = require("../../stores/userStore.js");
 var browserHistory = ReactRouter.browserHistory;
 
 
-var TimeList = React.createClass({
+var Admin = React.createClass({
   getInitialState: function(){
     return{
       sheet: this.props.sheet
@@ -98,43 +98,15 @@ return (
               </div>
 
               <div className="col-sm-1" id="button1">
-                <button type="button" className=" btn btn-xs btn btn-success">Approve</button>
+                <button type="button" className=" btn btn-xs btn btn-warning">Pending</button>
                 <br></br>
                 <div className="bd-example">
-                  <button type="button" className="btn btn-xs btn-danger delete-button" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Reject</button>
-                  <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog" role="document">
-                      <div className="modal-content">
-                        <div className="modal-header">
-                          <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <h4 className="modal-title">Post to from </h4>
-                        </div>
-                        <div className="modal-body">
-                          <div>
-                            <form>
-                              <div className="form-group">
-                                <label htmlFor="recipient-name" className="form-control-label">Recipient:</label>
-                                <input type="text" className="form-control" id="recipient-name"/>
-                              </div>
-                              <div className="form-group">
-                                <label htmlFor="message-text" className="form-control-label">Message:</label>
-                                <textarea className="form-control" id="message-text"></textarea>
-                              </div>
-                            </form>
-                          </div>
-                          <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary">Send message</button>
-                          </div>
-                        </div>
+                  <button type="button" className="btn btn-xs btn-default delete-button" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Pay</button>
 
                       </div>
 
                     </div>
-                  </div>
-
-                </div>
-              </div>
+                
             </div>
           </a>
         </div>
@@ -146,4 +118,4 @@ return (
 }
 });
 
-module.exports = TimeList;
+module.exports = Admin;

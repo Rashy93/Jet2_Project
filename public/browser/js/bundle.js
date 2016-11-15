@@ -56,9 +56,10 @@
 
 	/********components******/
 	var Login = __webpack_require__(227);
-	var Main = __webpack_require__(261);
+	var Main = __webpack_require__(228);
 	var Dashboard = __webpack_require__(264);
 	var TimeList = __webpack_require__(270);
+	var Admin = __webpack_require__(275);
 
 	__webpack_require__(271);
 
@@ -73,9 +74,10 @@
 	      React.createElement(
 	        Route,
 	        { path: '/', component: Main },
-	        React.createElement(IndexRoute, { component: Dashboard })
-	      ),
-	      React.createElement(Route, { path: '/approval', component: TimeList })
+	        React.createElement(IndexRoute, { component: Dashboard }),
+	        React.createElement(Route, { path: 'approval', component: TimeList }),
+	        React.createElement(Route, { path: 'admin', component: Admin })
+	      )
 	    );
 	  }
 	});
@@ -26363,10 +26365,10 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var Dispatcher = __webpack_require__(228); // requiring dispatcher
+	var Dispatcher = __webpack_require__(230); // requiring dispatcher
 	var ReactRouter = __webpack_require__(172);
-	var MainConstant = __webpack_require__(231); // requiring constant
-	var userStore = __webpack_require__(232);
+	var MainConstant = __webpack_require__(233); // requiring constant
+	var userStore = __webpack_require__(234);
 	var browserHistory = ReactRouter.browserHistory;
 
 	var Login = React.createClass({
@@ -26434,11 +26436,8 @@
 	                  React.createElement(
 	                    'span',
 	                    { className: 'pull-right' },
-	                    React.createElement(
-	                      'a',
-	                      { href: '#' },
-	                      'Register'
-	                    )
+	                    React.createElement('input', { type: 'checkbox' }),
+	                    ' Remember me'
 	                  ),
 	                  React.createElement(
 	                    'span',
@@ -26465,16 +26464,127 @@
 /* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+
+	var React = __webpack_require__(1);
+	var Header = __webpack_require__(229);
+	var Footer = __webpack_require__(263);
+	var Main = React.createClass({
+		displayName: "Main",
+
+		render: function render() {
+			return React.createElement(
+				"div",
+				null,
+				React.createElement(Header, null),
+				React.createElement(
+					"main",
+					null,
+					this.props.children
+				),
+				React.createElement(Footer, null)
+			);
+		}
+	});
+
+	module.exports = Main;
+
+/***/ },
+/* 229 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 
-	var Dispatcher = __webpack_require__(229).Dispatcher;
+	var React = __webpack_require__(1);
+	var Dispatcher = __webpack_require__(230);
+	var ReactRouter = __webpack_require__(172);
+	var MainConstant = __webpack_require__(233);
+	var userStore = __webpack_require__(234);
+	var browserHistory = ReactRouter.browserHistory;
+
+	var Header = React.createClass({
+	  displayName: 'Header',
+
+
+	  render: function render() {
+	    return React.createElement(
+	      'nav',
+	      { className: 'navbar navbar-light', id: 'nav1' },
+	      React.createElement(
+	        'ul',
+	        { className: 'nav navbar-nav' },
+	        React.createElement(
+	          'a',
+	          { className: 'navbar-brand', href: '#' },
+	          'Tract'
+	        ),
+	        React.createElement(
+	          'li',
+	          { className: 'nav-item' },
+	          React.createElement(
+	            'a',
+	            { className: 'nav-link', href: '/' },
+	            'Dashboard'
+	          )
+	        ),
+	        React.createElement(
+	          'li',
+	          { className: 'nav-item' },
+	          React.createElement(
+	            'a',
+	            { className: 'nav-link', href: '/approval' },
+	            'Approver'
+	          )
+	        ),
+	        React.createElement(
+	          'li',
+	          { className: 'nav-item' },
+	          React.createElement(
+	            'a',
+	            { className: 'nav-link', href: '/admin' },
+	            'Admin'
+	          )
+	        ),
+	        React.createElement(
+	          'li',
+	          { className: 'nav-item' },
+	          React.createElement(
+	            'a',
+	            { className: 'nav-link', href: '/login' },
+	            'Logout'
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'ul',
+	        { className: 'nav-item', id: 'head1' },
+	        React.createElement('input', { className: 'form-control', type: 'text', placeholder: 'Search' }),
+	        React.createElement(
+	          'button',
+	          { className: 'btn btn-outline-success', type: 'submit' },
+	          'Search'
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = Header;
+
+/***/ },
+/* 230 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Dispatcher = __webpack_require__(231).Dispatcher;
 
 	var appDispatcher = new Dispatcher();
 
 	module.exports = appDispatcher;
 
 /***/ },
-/* 229 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26486,11 +26596,11 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 
-	module.exports.Dispatcher = __webpack_require__(230);
+	module.exports.Dispatcher = __webpack_require__(232);
 
 
 /***/ },
-/* 230 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26727,7 +26837,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 231 */
+/* 233 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -26762,18 +26872,18 @@
 	};
 
 /***/ },
-/* 232 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var merge = __webpack_require__(233);
-	var axios = __webpack_require__(235);
-	var Dispatcher = __webpack_require__(228);
-	var EventEmitter = __webpack_require__(260).EventEmitter;
+	var merge = __webpack_require__(235);
+	var axios = __webpack_require__(237);
+	var Dispatcher = __webpack_require__(230);
+	var EventEmitter = __webpack_require__(262).EventEmitter;
 	var browserHistory = __webpack_require__(172).browserHistory;
-	var MainDispatcher = __webpack_require__(228); // requiring dispatcher
-	var MainConstant = __webpack_require__(231); // requiring constant
+	var MainDispatcher = __webpack_require__(230); // requiring dispatcher
+	var MainConstant = __webpack_require__(233); // requiring constant
 
 	//variables to store
 	var _user = JSON.parse(localStorage.getItem("user"));
@@ -26820,7 +26930,7 @@
 	}
 
 /***/ },
-/* 233 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {/*!
@@ -26998,10 +27108,10 @@
 		}
 
 	})(typeof module === 'object' && module && typeof module.exports === 'object' && module.exports);
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(234)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(236)(module)))
 
 /***/ },
-/* 234 */
+/* 236 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -27017,20 +27127,20 @@
 
 
 /***/ },
-/* 235 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(236);
+	module.exports = __webpack_require__(238);
 
 /***/ },
-/* 236 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(237);
-	var bind = __webpack_require__(238);
-	var Axios = __webpack_require__(239);
+	var utils = __webpack_require__(239);
+	var bind = __webpack_require__(240);
+	var Axios = __webpack_require__(241);
 
 	/**
 	 * Create an instance of Axios
@@ -27063,15 +27173,15 @@
 	};
 
 	// Expose Cancel & CancelToken
-	axios.Cancel = __webpack_require__(257);
-	axios.CancelToken = __webpack_require__(258);
-	axios.isCancel = __webpack_require__(254);
+	axios.Cancel = __webpack_require__(259);
+	axios.CancelToken = __webpack_require__(260);
+	axios.isCancel = __webpack_require__(256);
 
 	// Expose all/spread
 	axios.all = function all(promises) {
 	  return Promise.all(promises);
 	};
-	axios.spread = __webpack_require__(259);
+	axios.spread = __webpack_require__(261);
 
 	module.exports = axios;
 
@@ -27080,12 +27190,12 @@
 
 
 /***/ },
-/* 237 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var bind = __webpack_require__(238);
+	var bind = __webpack_require__(240);
 
 	/*global toString:true*/
 
@@ -27385,7 +27495,7 @@
 
 
 /***/ },
-/* 238 */
+/* 240 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27402,17 +27512,17 @@
 
 
 /***/ },
-/* 239 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var defaults = __webpack_require__(240);
-	var utils = __webpack_require__(237);
-	var InterceptorManager = __webpack_require__(251);
-	var dispatchRequest = __webpack_require__(252);
-	var isAbsoluteURL = __webpack_require__(255);
-	var combineURLs = __webpack_require__(256);
+	var defaults = __webpack_require__(242);
+	var utils = __webpack_require__(239);
+	var InterceptorManager = __webpack_require__(253);
+	var dispatchRequest = __webpack_require__(254);
+	var isAbsoluteURL = __webpack_require__(257);
+	var combineURLs = __webpack_require__(258);
 
 	/**
 	 * Create a new instance of Axios
@@ -27493,13 +27603,13 @@
 
 
 /***/ },
-/* 240 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
-	var utils = __webpack_require__(237);
-	var normalizeHeaderName = __webpack_require__(241);
+	var utils = __webpack_require__(239);
+	var normalizeHeaderName = __webpack_require__(243);
 
 	var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 	var DEFAULT_CONTENT_TYPE = {
@@ -27516,10 +27626,10 @@
 	  var adapter;
 	  if (typeof XMLHttpRequest !== 'undefined') {
 	    // For browsers use XHR adapter
-	    adapter = __webpack_require__(242);
+	    adapter = __webpack_require__(244);
 	  } else if (typeof process !== 'undefined') {
 	    // For node use HTTP adapter
-	    adapter = __webpack_require__(242);
+	    adapter = __webpack_require__(244);
 	  }
 	  return adapter;
 	}
@@ -27586,12 +27696,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 241 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(237);
+	var utils = __webpack_require__(239);
 
 	module.exports = function normalizeHeaderName(headers, normalizedName) {
 	  utils.forEach(headers, function processHeader(value, name) {
@@ -27604,18 +27714,18 @@
 
 
 /***/ },
-/* 242 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
-	var utils = __webpack_require__(237);
-	var settle = __webpack_require__(243);
-	var buildURL = __webpack_require__(246);
-	var parseHeaders = __webpack_require__(247);
-	var isURLSameOrigin = __webpack_require__(248);
-	var createError = __webpack_require__(244);
-	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(249);
+	var utils = __webpack_require__(239);
+	var settle = __webpack_require__(245);
+	var buildURL = __webpack_require__(248);
+	var parseHeaders = __webpack_require__(249);
+	var isURLSameOrigin = __webpack_require__(250);
+	var createError = __webpack_require__(246);
+	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(251);
 
 	module.exports = function xhrAdapter(config) {
 	  return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -27711,7 +27821,7 @@
 	    // This is only done if running in a standard browser environment.
 	    // Specifically not if we're in a web worker, or react-native.
 	    if (utils.isStandardBrowserEnv()) {
-	      var cookies = __webpack_require__(250);
+	      var cookies = __webpack_require__(252);
 
 	      // Add xsrf header
 	      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -27788,12 +27898,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 243 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var createError = __webpack_require__(244);
+	var createError = __webpack_require__(246);
 
 	/**
 	 * Resolve or reject a Promise based on response status.
@@ -27819,12 +27929,12 @@
 
 
 /***/ },
-/* 244 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var enhanceError = __webpack_require__(245);
+	var enhanceError = __webpack_require__(247);
 
 	/**
 	 * Create an Error with the specified message, config, error code, and response.
@@ -27842,7 +27952,7 @@
 
 
 /***/ },
-/* 245 */
+/* 247 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27867,12 +27977,12 @@
 
 
 /***/ },
-/* 246 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(237);
+	var utils = __webpack_require__(239);
 
 	function encode(val) {
 	  return encodeURIComponent(val).
@@ -27941,12 +28051,12 @@
 
 
 /***/ },
-/* 247 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(237);
+	var utils = __webpack_require__(239);
 
 	/**
 	 * Parse headers into an object
@@ -27984,12 +28094,12 @@
 
 
 /***/ },
-/* 248 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(237);
+	var utils = __webpack_require__(239);
 
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -28058,7 +28168,7 @@
 
 
 /***/ },
-/* 249 */
+/* 251 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28100,12 +28210,12 @@
 
 
 /***/ },
-/* 250 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(237);
+	var utils = __webpack_require__(239);
 
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -28159,12 +28269,12 @@
 
 
 /***/ },
-/* 251 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(237);
+	var utils = __webpack_require__(239);
 
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -28217,15 +28327,15 @@
 
 
 /***/ },
-/* 252 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(237);
-	var transformData = __webpack_require__(253);
-	var isCancel = __webpack_require__(254);
-	var defaults = __webpack_require__(240);
+	var utils = __webpack_require__(239);
+	var transformData = __webpack_require__(255);
+	var isCancel = __webpack_require__(256);
+	var defaults = __webpack_require__(242);
 
 	/**
 	 * Throws a `Cancel` if cancellation has been requested.
@@ -28302,12 +28412,12 @@
 
 
 /***/ },
-/* 253 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(237);
+	var utils = __webpack_require__(239);
 
 	/**
 	 * Transform the data for a request or a response
@@ -28328,7 +28438,7 @@
 
 
 /***/ },
-/* 254 */
+/* 256 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28339,7 +28449,7 @@
 
 
 /***/ },
-/* 255 */
+/* 257 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28359,7 +28469,7 @@
 
 
 /***/ },
-/* 256 */
+/* 258 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28377,7 +28487,7 @@
 
 
 /***/ },
-/* 257 */
+/* 259 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28402,12 +28512,12 @@
 
 
 /***/ },
-/* 258 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Cancel = __webpack_require__(257);
+	var Cancel = __webpack_require__(259);
 
 	/**
 	 * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -28465,7 +28575,7 @@
 
 
 /***/ },
-/* 259 */
+/* 261 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28498,7 +28608,7 @@
 
 
 /***/ },
-/* 260 */
+/* 262 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -28806,74 +28916,16 @@
 
 
 /***/ },
-/* 261 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var React = __webpack_require__(1);
-	var Header = __webpack_require__(262);
-	var Footer = __webpack_require__(263);
-
-	var Main = React.createClass({
-		displayName: "Main",
-
-		render: function render() {
-			return React.createElement(
-				"div",
-				null,
-				React.createElement(Header, null),
-				React.createElement(
-					"main",
-					null,
-					this.props.children
-				),
-				React.createElement(Footer, null)
-			);
-		}
-	});
-
-	module.exports = Main;
-
-/***/ },
-/* 262 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-	var Dispatcher = __webpack_require__(228);
-	var ReactRouter = __webpack_require__(172);
-	var MainConstant = __webpack_require__(231);
-	var userStore = __webpack_require__(232);
-	var browserHistory = ReactRouter.browserHistory;
-
-	var Header = React.createClass({
-	  displayName: 'Header',
-
-
-	  render: function render() {
-	    return React.createElement(
-	      'h1',
-	      null,
-	      'Header'
-	    );
-	  }
-	});
-
-	module.exports = Header;
-
-/***/ },
 /* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var Dispatcher = __webpack_require__(228);
+	var Dispatcher = __webpack_require__(230);
 	var ReactRouter = __webpack_require__(172);
-	var MainConstant = __webpack_require__(231);
-	var userStore = __webpack_require__(232);
+	var MainConstant = __webpack_require__(233);
+	var userStore = __webpack_require__(234);
 	var browserHistory = ReactRouter.browserHistory;
 
 	var Footer = React.createClass({
@@ -28882,9 +28934,13 @@
 
 	  render: function render() {
 	    return React.createElement(
-	      'h1',
-	      null,
-	      'Footer'
+	      'nav',
+	      { className: 'navbar navbar-light', id: 'nav1' },
+	      React.createElement(
+	        'a',
+	        { className: 'navbar-brand' },
+	        'Jet2.com'
+	      )
 	    );
 	  }
 	});
@@ -28898,10 +28954,10 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var Dispatcher = __webpack_require__(228);
+	var Dispatcher = __webpack_require__(230);
 	var ReactRouter = __webpack_require__(172);
-	var MainConstant = __webpack_require__(231);
-	var userStore = __webpack_require__(232);
+	var MainConstant = __webpack_require__(233);
+	var userStore = __webpack_require__(234);
 	var browserHistory = ReactRouter.browserHistory;
 	/*****COMPONENTS*****/
 	var TimeInput = __webpack_require__(265);
@@ -28942,10 +28998,10 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var Dispatcher = __webpack_require__(228); // requiring dispatcher
+	var Dispatcher = __webpack_require__(230); // requiring dispatcher
 	var ReactRouter = __webpack_require__(172);
-	var MainConstant = __webpack_require__(231); // requiring constant
-	var userStore = __webpack_require__(232);
+	var MainConstant = __webpack_require__(233); // requiring constant
+	var userStore = __webpack_require__(234);
 	var browserHistory = ReactRouter.browserHistory;
 	var TimeSheet = __webpack_require__(266);
 	var TimeStore = __webpack_require__(267);
@@ -29053,10 +29109,10 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var Dispatcher = __webpack_require__(228); // requiring dispatcher
+	var Dispatcher = __webpack_require__(230); // requiring dispatcher
 	var ReactRouter = __webpack_require__(172);
-	var MainConstant = __webpack_require__(231); // requiring constant
-	var userStore = __webpack_require__(232);
+	var MainConstant = __webpack_require__(233); // requiring constant
+	var userStore = __webpack_require__(234);
 	var browserHistory = ReactRouter.browserHistory;
 
 	var TimeSheet = React.createClass({
@@ -29171,11 +29227,11 @@
 
 	'use strict';
 
-	var EventEmitter = __webpack_require__(260).EventEmitter;
-	var merge = __webpack_require__(233);
-	var Dispatcher = __webpack_require__(228);
-	var MainConstant = __webpack_require__(231);
-	var axios = __webpack_require__(235);
+	var EventEmitter = __webpack_require__(262).EventEmitter;
+	var merge = __webpack_require__(235);
+	var Dispatcher = __webpack_require__(230);
+	var MainConstant = __webpack_require__(233);
+	var axios = __webpack_require__(237);
 	var getToken = __webpack_require__(268);
 
 	var _timesheets = [];
@@ -29263,10 +29319,10 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var Dispatcher = __webpack_require__(228); // requiring dispatcher
+	var Dispatcher = __webpack_require__(230); // requiring dispatcher
 	var ReactRouter = __webpack_require__(172);
-	var MainConstant = __webpack_require__(231); // requiring constant
-	var userStore = __webpack_require__(232);
+	var MainConstant = __webpack_require__(233); // requiring constant
+	var userStore = __webpack_require__(234);
 	var browserHistory = ReactRouter.browserHistory;
 
 	var TotalSheet = React.createClass({
@@ -29327,10 +29383,10 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var Dispatcher = __webpack_require__(228); // requiring dispatcher
+	var Dispatcher = __webpack_require__(230); // requiring dispatcher
 	var ReactRouter = __webpack_require__(172);
-	var MainConstant = __webpack_require__(231); // requiring constant
-	var userStore = __webpack_require__(232);
+	var MainConstant = __webpack_require__(233); // requiring constant
+	var userStore = __webpack_require__(234);
 	var browserHistory = ReactRouter.browserHistory;
 
 	var TimeList = React.createClass({
@@ -29359,7 +29415,6 @@
 	      React.createElement(
 	        'div',
 	        null,
-	        React.createElement('router-view', null),
 	        React.createElement(
 	          'div',
 	          { className: 'time-entries' },
@@ -29391,6 +29446,13 @@
 	                  'div',
 	                  { className: 'col-sm-2 text-center time-block' },
 	                  React.createElement(
+	                    'p',
+	                    { className: 'label label-primary text-center' },
+	                    React.createElement('i', { className: 'glyphicon glyphicon-calendar' }),
+	                    this.state.date,
+	                    '12-04-2015 ~ 15-01-2016'
+	                  ),
+	                  React.createElement(
 	                    'h3',
 	                    { className: 'list-group-item-text total-time' },
 	                    React.createElement('i', { className: 'glyphicon glyphicon-time' }),
@@ -29402,17 +29464,6 @@
 	                      null,
 	                      'Total Hours'
 	                    )
-	                  )
-	                ),
-	                React.createElement(
-	                  'div',
-	                  { className: 'text-center' },
-	                  React.createElement(
-	                    'p',
-	                    { className: 'label label-primary text-center' },
-	                    React.createElement('i', { className: 'glyphicon glyphicon-calendar' }),
-	                    this.state.date,
-	                    '12-04-2015 ~ 15-01-2016'
 	                  )
 	                ),
 	                React.createElement('div', { className: 'col-sm-7 comment-section' }),
@@ -29448,9 +29499,56 @@
 	                        'div',
 	                        { className: 'modal-body' },
 	                        React.createElement(
-	                          'p',
-	                          null,
-	                          'Some text in the modal.'
+	                          'ul',
+	                          { className: 'list-group' },
+	                          React.createElement(
+	                            'li',
+	                            { className: 'list-group-item' },
+	                            React.createElement(
+	                              'span',
+	                              { className: 'glyphicon glyphicon-calendar' },
+	                              '2014-11-24'
+	                            ),
+	                            React.createElement(
+	                              'span',
+	                              { className: 'tag tag-default tag-pill float-right' },
+	                              '~~3.5 Hours'
+	                            ),
+	                            React.createElement('br', null),
+	                            'Project 1'
+	                          ),
+	                          React.createElement(
+	                            'li',
+	                            { className: 'list-group-item' },
+	                            React.createElement(
+	                              'span',
+	                              { className: 'glyphicon glyphicon-calendar' },
+	                              '2014-11-24'
+	                            ),
+	                            React.createElement(
+	                              'span',
+	                              { className: 'tag tag-default tag-pill float-right' },
+	                              '~~3.5 Hours'
+	                            ),
+	                            React.createElement('br', null),
+	                            'Project 2'
+	                          ),
+	                          React.createElement(
+	                            'li',
+	                            { className: 'list-group-item' },
+	                            React.createElement(
+	                              'span',
+	                              { className: 'glyphicon glyphicon-calendar' },
+	                              '2014-11-24'
+	                            ),
+	                            React.createElement(
+	                              'span',
+	                              { className: 'tag tag-default tag-pill float-right' },
+	                              '~~3.5 Hours'
+	                            ),
+	                            React.createElement('br', null),
+	                            'Project 3'
+	                          )
 	                        )
 	                      ),
 	                      React.createElement(
@@ -29484,7 +29582,7 @@
 	                    ),
 	                    React.createElement(
 	                      'div',
-	                      { className: 'modal fade', id: 'exampleModal', tabindex: '-1', role: 'dialog', 'aria-labelledby': 'exampleModalLabel', 'aria-hidden': 'true' },
+	                      { className: 'modal fade', id: 'exampleModal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'exampleModalLabel', 'aria-hidden': 'true' },
 	                      React.createElement(
 	                        'div',
 	                        { className: 'modal-dialog', role: 'document' },
@@ -29542,7 +29640,7 @@
 	                            ),
 	                            React.createElement(
 	                              'div',
-	                              { 'class': 'modal-footer' },
+	                              { className: 'modal-footer' },
 	                              React.createElement(
 	                                'button',
 	                                { type: 'button', className: 'btn btn-secondary', 'data-dismiss': 'modal' },
@@ -29553,15 +29651,6 @@
 	                                { type: 'button', className: 'btn btn-primary' },
 	                                'Send message'
 	                              )
-	                            )
-	                          ),
-	                          React.createElement(
-	                            'div',
-	                            { className: 'modal-footer' },
-	                            React.createElement(
-	                              'button',
-	                              { type: 'button', className: 'btn btn-default', 'data-dismiss': 'modal' },
-	                              'Close'
 	                            )
 	                          )
 	                        )
@@ -29615,7 +29704,7 @@
 
 
 	// module
-	exports.push([module.id, "#logo {\n  height: 60px; }\n\nsmall#hours {\n  display: inherit; }\n\n#button123 {\n  left: 34%;\n  display: inline-flex; }\n\n#button12 {\n  display: inline-flex;\n  right: 7%; }\n\n#button1 {\n  display: inline-flex;\n  left: 52%; }\n\n#round-profile-pic {\n  border-radius: 50%; }\n\n#card-reveal-spartan {\n  background-color: #e6e6e6; }\n\n#card-reveal-client {\n  background-color: #e6e6e6; }\n\n.avatar {\n  height: 75px;\n  margin: 0 auto;\n  margin-top: 10px;\n  margin-bottom: 10px; }\n\n.user-details {\n  background-color: #f5f5f5;\n  border-right: 1px solid #ddd;\n  margin: -10px 0; }\n\n.time-block {\n  padding: 10px; }\n\n.comment-section {\n  padding: 20px; }\n\n#header-title {\n  text-align: center;\n  font-family: \"Open Sans\", sans-serif;\n  text-transform: uppercase;\n  color: #989898; }\n\n#text-banner {\n  text-align: center;\n  font-family: \"Open Sans\", sans-serif;\n  text-transform: uppercase;\n  color: white; }\n\n#text-client {\n  margin: 0;\n  text-align: center;\n  font-family: \"Open Sans\", sans-serif;\n  text-transform: uppercase;\n  color: black;\n  opacity: 1; }\n\n#card-title-spartan {\n  color: orange; }\n\n#card-title-client {\n  color: orange; }\n\n#admin-dashboard {\n  text-align: center; }\n\nbutton#button-update-spartan {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif;\n  margin: 5px; }\n\nbutton#button-delete-spartan {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif;\n  margin: 5px; }\n\nbutton#button-delete-client {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif; }\n\nbutton#button-view-spartan {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif; }\n\nbutton#button-view-spartans {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif; }\n\nbutton#button-view-clients {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif; }\n\nbutton#button-register {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif; }\n\nbutton#button-send-request {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif; }\n\n#button-spartan {\n  text-align: center;\n  font-family: \"Open Sans\", sans-serif; }\n\n#button-client {\n  text-align: center;\n  font-family: \"Open Sans\", sans-serif; }\n\ndiv.card-action {\n  text-align: center; }\n\n.p {\n  font-family: \"Open Sans\", sans-serif; }\n\n#header-nav {\n  font-family: \"Open Sans\", sans-serif; }\n\ndiv.footer {\n  font-family: \"Open Sans\", sans-serif; }\n\n#button-back-spartanlist {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif;\n  margin: 5px; }\n\n#button-update-info {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif;\n  float: right;\n  margin: 5px; }\n\n.profile-image {\n  width: 200px;\n  height: 200px;\n  border-radius: 100px;\n  margin-bottom: 20px; }\n\n#client-image {\n  width: 200px;\n  height: 200px; }\n\n#client-banner {\n  background-size: cover;\n  height: 335px;\n  width: 100%;\n  background-image: url(http://www.medhaid.com/images/our_client/our-clients.jpg);\n  opacity: 0.85; }\n\n#googlemap {\n  padding-top: 50px; }\n\n.grad {\n  background-color: #F2EFEB;\n  background-image: -webkit-gradient(linear, left top, eft bottom, from(#F2EFEB), to(#8e8b87));\n  background-image: -webkit-linear-gradient(top, #F2EFEB, #8e8b87);\n  background-image: -moz-linear-gradient(top, #F2EFEB, #8e8b87);\n  background-image: -ms-linear-gradient(top, #F2EFEB, #8e8b87);\n  background-image: -o-linear-gradient(top, #F2EFEB, #8e8b87);\n  height: auto; }\n\nhr {\n  display: block;\n  border-width: 1px;\n  border-color: #4DB6AC; }\n\n#bio-cv {\n  text-align: left;\n  font-family: \"Open Sans\", sans-serif;\n  font-size: 18px; }\n  #bio-cv .link {\n    text-decoration: underline;\n    font-family: \"Open Sans\", sans-serif; }\n\n.viewBioDescription {\n  position: relative;\n  text-align: center;\n  font-family: \"Open Sans\", sans-serif;\n  border-radius: 5px; }\n  .viewBioDescription .viewBio {\n    text-align: left;\n    font-family: \"Open Sans\", sans-serif;\n    font-style: italic;\n    font-size: 16px; }\n\n.viewJobDescription {\n  position: relative;\n  text-align: center;\n  font-family: \"Open Sans\", sans-serif;\n  border-radius: 5px; }\n  .viewJobDescription .viewWorkExperience {\n    text-align: left;\n    font-family: \"Open Sans\", sans-serif; }\n    .viewJobDescription .viewWorkExperience .job-class {\n      font-style: italic;\n      font-size: 16px; }\n\n.viewEducation {\n  position: relative;\n  text-align: center;\n  font-family: \"Open Sans\", sans-serif;\n  border-radius: 5px; }\n  .viewEducation .viewAllEducation {\n    text-align: left;\n    font-family: \"Open Sans\", sans-serif; }\n    .viewEducation .viewAllEducation .job-class {\n      font-style: italic;\n      font-size: 16px; }\n\n.viewInterest {\n  position: relative;\n  text-align: center;\n  font-family: \"Open Sans\", sans-serif;\n  border-radius: 5px; }\n  .viewInterest .listOfInterest {\n    text-align: left;\n    font-family: \"Open Sans\", sans-serif;\n    font-style: italic;\n    font-size: 16px; }\n\n#header-create-user {\n  text-align: center;\n  font-size: 40px; }\n\n#button-register {\n  margin-top: 15px; }\n\n.label-create-cv {\n  font-size: 18px; }\n\n#header-title {\n  z-index: 1;\n  position: relative; }\n\n#text-banner {\n  position: absolute;\n  top: 10%;\n  left: 0;\n  width: 100%;\n  z-index: 1; }\n\n#site-button {\n  position: absolute;\n  top: 90%;\n  left: 0;\n  width: 100%;\n  z-index: 1; }\n\n#image-banner {\n  position: relative;\n  height: 335px;\n  width: 100%;\n  background-image: url(http://spartaglobal.com/wp-content/uploads/2014/09/New-Dark-Face-Squares.png); }\n\n@media only screen and (max-width: 600px) {\n  #logo {\n    width: 25%;\n    height: 6.5%; }\n  #search-bar {\n    width: 25%; } }\n\n@media only screen and (max-width: 860px) {\n  #search-bar {\n    width: 25%; } }\n\n@media only screen and (max-width: 860px) {\n  #search-bar {\n    width: 25%; } }\n", ""]);
+	exports.push([module.id, "#logo {\n  height: 60px; }\n\nsmall#hours {\n  display: inherit; }\n\n#button123 {\n  left: 34%;\n  display: inline-flex; }\n\n#button12 {\n  display: inline-flex;\n  right: 7%; }\n\n#button1 {\n  display: inline-flex;\n  left: 52%; }\n\n#nav1 {\n  background-color: #e3f2fd; }\n\n#head1 {\n  display: inline-flex;\n  margin-bottom: 0px;\n  margin-top: 10px;\n  float: right; }\n\n#round-profile-pic {\n  border-radius: 50%; }\n\n#card-reveal-spartan {\n  background-color: #e6e6e6; }\n\n#card-reveal-client {\n  background-color: #e6e6e6; }\n\n.avatar {\n  height: 75px;\n  margin: 0 auto;\n  margin-top: 10px;\n  margin-bottom: 10px; }\n\n.user-details {\n  background-color: #f5f5f5;\n  border-right: 1px solid #ddd;\n  margin: -10px 0; }\n\n.time-block {\n  padding: 10px; }\n\n.comment-section {\n  padding: 20px; }\n\n#header-title {\n  text-align: center;\n  font-family: \"Open Sans\", sans-serif;\n  text-transform: uppercase;\n  color: #989898; }\n\n#text-banner {\n  text-align: center;\n  font-family: \"Open Sans\", sans-serif;\n  text-transform: uppercase;\n  color: white; }\n\n#text-client {\n  margin: 0;\n  text-align: center;\n  font-family: \"Open Sans\", sans-serif;\n  text-transform: uppercase;\n  color: black;\n  opacity: 1; }\n\n#card-title-spartan {\n  color: orange; }\n\n#card-title-client {\n  color: orange; }\n\n#admin-dashboard {\n  text-align: center; }\n\nbutton#button-update-spartan {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif;\n  margin: 5px; }\n\nbutton#button-delete-spartan {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif;\n  margin: 5px; }\n\nbutton#button-delete-client {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif; }\n\nbutton#button-view-spartan {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif; }\n\nbutton#button-view-spartans {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif; }\n\nbutton#button-view-clients {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif; }\n\nbutton#button-register {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif; }\n\nbutton#button-send-request {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif; }\n\n#button-spartan {\n  text-align: center;\n  font-family: \"Open Sans\", sans-serif; }\n\n#button-client {\n  text-align: center;\n  font-family: \"Open Sans\", sans-serif; }\n\ndiv.card-action {\n  text-align: center; }\n\n.p {\n  font-family: \"Open Sans\", sans-serif; }\n\n#header-nav {\n  font-family: \"Open Sans\", sans-serif; }\n\ndiv.footer {\n  font-family: \"Open Sans\", sans-serif; }\n\n#button-back-spartanlist {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif;\n  margin: 5px; }\n\n#button-update-info {\n  border-radius: 5px;\n  font-family: \"Open Sans\", sans-serif;\n  float: right;\n  margin: 5px; }\n\n.profile-image {\n  width: 200px;\n  height: 200px;\n  border-radius: 100px;\n  margin-bottom: 20px; }\n\n#client-image {\n  width: 200px;\n  height: 200px; }\n\n#client-banner {\n  background-size: cover;\n  height: 335px;\n  width: 100%;\n  background-image: url(http://www.medhaid.com/images/our_client/our-clients.jpg);\n  opacity: 0.85; }\n\n#googlemap {\n  padding-top: 50px; }\n\n.grad {\n  background-color: #F2EFEB;\n  background-image: -webkit-gradient(linear, left top, eft bottom, from(#F2EFEB), to(#8e8b87));\n  background-image: -webkit-linear-gradient(top, #F2EFEB, #8e8b87);\n  background-image: -moz-linear-gradient(top, #F2EFEB, #8e8b87);\n  background-image: -ms-linear-gradient(top, #F2EFEB, #8e8b87);\n  background-image: -o-linear-gradient(top, #F2EFEB, #8e8b87);\n  height: auto; }\n\nhr {\n  display: block;\n  border-width: 1px;\n  border-color: #4DB6AC; }\n\n#bio-cv {\n  text-align: left;\n  font-family: \"Open Sans\", sans-serif;\n  font-size: 18px; }\n  #bio-cv .link {\n    text-decoration: underline;\n    font-family: \"Open Sans\", sans-serif; }\n\n.viewBioDescription {\n  position: relative;\n  text-align: center;\n  font-family: \"Open Sans\", sans-serif;\n  border-radius: 5px; }\n  .viewBioDescription .viewBio {\n    text-align: left;\n    font-family: \"Open Sans\", sans-serif;\n    font-style: italic;\n    font-size: 16px; }\n\n.viewJobDescription {\n  position: relative;\n  text-align: center;\n  font-family: \"Open Sans\", sans-serif;\n  border-radius: 5px; }\n  .viewJobDescription .viewWorkExperience {\n    text-align: left;\n    font-family: \"Open Sans\", sans-serif; }\n    .viewJobDescription .viewWorkExperience .job-class {\n      font-style: italic;\n      font-size: 16px; }\n\n.viewEducation {\n  position: relative;\n  text-align: center;\n  font-family: \"Open Sans\", sans-serif;\n  border-radius: 5px; }\n  .viewEducation .viewAllEducation {\n    text-align: left;\n    font-family: \"Open Sans\", sans-serif; }\n    .viewEducation .viewAllEducation .job-class {\n      font-style: italic;\n      font-size: 16px; }\n\n.viewInterest {\n  position: relative;\n  text-align: center;\n  font-family: \"Open Sans\", sans-serif;\n  border-radius: 5px; }\n  .viewInterest .listOfInterest {\n    text-align: left;\n    font-family: \"Open Sans\", sans-serif;\n    font-style: italic;\n    font-size: 16px; }\n\n#header-create-user {\n  text-align: center;\n  font-size: 40px; }\n\n#button-register {\n  margin-top: 15px; }\n\n.label-create-cv {\n  font-size: 18px; }\n\n#header-title {\n  z-index: 1;\n  position: relative; }\n\n#text-banner {\n  position: absolute;\n  top: 10%;\n  left: 0;\n  width: 100%;\n  z-index: 1; }\n\n#site-button {\n  position: absolute;\n  top: 90%;\n  left: 0;\n  width: 100%;\n  z-index: 1; }\n\n#image-banner {\n  position: relative;\n  height: 335px;\n  width: 100%;\n  background-image: url(http://spartaglobal.com/wp-content/uploads/2014/09/New-Dark-Face-Squares.png); }\n\n@media only screen and (max-width: 600px) {\n  #logo {\n    width: 25%;\n    height: 6.5%; }\n  #search-bar {\n    width: 25%; } }\n\n@media only screen and (max-width: 860px) {\n  #search-bar {\n    width: 25%; } }\n\n@media only screen and (max-width: 860px) {\n  #search-bar {\n    width: 25%; } }\n", ""]);
 
 	// exports
 
@@ -29927,6 +30016,223 @@
 			URL.revokeObjectURL(oldSrc);
 	}
 
+
+/***/ },
+/* 275 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var Dispatcher = __webpack_require__(230); // requiring dispatcher
+	var ReactRouter = __webpack_require__(172);
+	var MainConstant = __webpack_require__(233); // requiring constant
+	var userStore = __webpack_require__(234);
+	var browserHistory = ReactRouter.browserHistory;
+
+	var Admin = React.createClass({
+	  displayName: 'Admin',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      sheet: this.props.sheet
+	    };
+	  },
+	  //   handleCallback: function(sheet){
+	  //     this.setState({
+	  //       sheet: {
+	  //         date:     "",
+	  //         hours:    "",
+	  //         comment:  ""
+	  //       }
+	  //     })
+	  // },
+	  render: function render() {
+	    this.state.sheet = this.props.sheet;
+
+	    return React.createElement(
+	      'section',
+	      null,
+	      React.createElement(
+	        'div',
+	        null,
+	        React.createElement(
+	          'div',
+	          { className: 'time-entries' },
+	          React.createElement('br', null),
+	          React.createElement(
+	            'div',
+	            { className: 'list-group' },
+	            React.createElement(
+	              'a',
+	              { className: 'list-group-item', htmlFor: 'timeEntry in timeEntries' },
+	              React.createElement(
+	                'div',
+	                { className: 'row' },
+	                React.createElement(
+	                  'div',
+	                  { className: 'col-sm-2 user-details' },
+	                  React.createElement('img', { src: 'https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAkSAAAAJDU0ZjcwZWM3LTFmMmItNGI4OC04MWZiLWQyMzQyZjk1YWJmOA.jpg', className: 'avatar img-circle img-responsive' }),
+	                  React.createElement(
+	                    'div',
+	                    { className: 'text-center' },
+	                    React.createElement(
+	                      'p',
+	                      { className: 'label label-primary text-center' },
+	                      'RashidAwil'
+	                    )
+	                  )
+	                ),
+	                React.createElement(
+	                  'div',
+	                  { className: 'col-sm-2 text-center time-block' },
+	                  React.createElement(
+	                    'p',
+	                    { className: 'label label-primary text-center' },
+	                    React.createElement('i', { className: 'glyphicon glyphicon-calendar' }),
+	                    this.state.date,
+	                    '12-04-2015 ~ 15-01-2016'
+	                  ),
+	                  React.createElement(
+	                    'h3',
+	                    { className: 'list-group-item-text total-time' },
+	                    React.createElement('i', { className: 'glyphicon glyphicon-time' }),
+	                    this.state.hours,
+	                    '35.5',
+	                    React.createElement('br', null),
+	                    React.createElement(
+	                      'small',
+	                      null,
+	                      'Total Hours'
+	                    )
+	                  )
+	                ),
+	                React.createElement('div', { className: 'col-sm-7 comment-section' }),
+	                React.createElement(
+	                  'button',
+	                  { type: 'button', className: 'btn btn-info btn-lg', 'data-toggle': 'modal', 'data-target': '#myModal' },
+	                  'Open Timesheets'
+	                ),
+	                React.createElement(
+	                  'div',
+	                  { className: 'modal fade', id: 'myModal', role: 'dialog' },
+	                  React.createElement(
+	                    'div',
+	                    { className: 'modal-dialog' },
+	                    React.createElement(
+	                      'div',
+	                      { className: 'modal-content' },
+	                      React.createElement(
+	                        'div',
+	                        { className: 'modal-header' },
+	                        React.createElement(
+	                          'button',
+	                          { type: 'button', className: 'close', 'data-dismiss': 'modal' },
+	                          '\xD7'
+	                        ),
+	                        React.createElement(
+	                          'h4',
+	                          { className: 'modal-title' },
+	                          'Timesheet from '
+	                        )
+	                      ),
+	                      React.createElement(
+	                        'div',
+	                        { className: 'modal-body' },
+	                        React.createElement(
+	                          'ul',
+	                          { className: 'list-group' },
+	                          React.createElement(
+	                            'li',
+	                            { className: 'list-group-item' },
+	                            React.createElement(
+	                              'span',
+	                              { className: 'glyphicon glyphicon-calendar' },
+	                              '2014-11-24'
+	                            ),
+	                            React.createElement(
+	                              'span',
+	                              { className: 'tag tag-default tag-pill float-right' },
+	                              '~~3.5 Hours'
+	                            ),
+	                            React.createElement('br', null),
+	                            'Project 1'
+	                          ),
+	                          React.createElement(
+	                            'li',
+	                            { className: 'list-group-item' },
+	                            React.createElement(
+	                              'span',
+	                              { className: 'glyphicon glyphicon-calendar' },
+	                              '2014-11-24'
+	                            ),
+	                            React.createElement(
+	                              'span',
+	                              { className: 'tag tag-default tag-pill float-right' },
+	                              '~~3.5 Hours'
+	                            ),
+	                            React.createElement('br', null),
+	                            'Project 2'
+	                          ),
+	                          React.createElement(
+	                            'li',
+	                            { className: 'list-group-item' },
+	                            React.createElement(
+	                              'span',
+	                              { className: 'glyphicon glyphicon-calendar' },
+	                              '2014-11-24'
+	                            ),
+	                            React.createElement(
+	                              'span',
+	                              { className: 'tag tag-default tag-pill float-right' },
+	                              '~~3.5 Hours'
+	                            ),
+	                            React.createElement('br', null),
+	                            'Project 3'
+	                          )
+	                        )
+	                      ),
+	                      React.createElement(
+	                        'div',
+	                        { className: 'modal-footer' },
+	                        React.createElement(
+	                          'button',
+	                          { type: 'button', className: 'btn btn-default', 'data-dismiss': 'modal' },
+	                          'Close'
+	                        )
+	                      )
+	                    )
+	                  )
+	                ),
+	                React.createElement(
+	                  'div',
+	                  { className: 'col-sm-1', id: 'button1' },
+	                  React.createElement(
+	                    'button',
+	                    { type: 'button', className: ' btn btn-xs btn btn-warning' },
+	                    'Pending'
+	                  ),
+	                  React.createElement('br', null),
+	                  React.createElement(
+	                    'div',
+	                    { className: 'bd-example' },
+	                    React.createElement(
+	                      'button',
+	                      { type: 'button', className: 'btn btn-xs btn-default delete-button', 'data-toggle': 'modal', 'data-target': '#exampleModal', 'data-whatever': '@mdo' },
+	                      'Pay'
+	                    )
+	                  )
+	                )
+	              )
+	            )
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = Admin;
 
 /***/ }
 /******/ ]);

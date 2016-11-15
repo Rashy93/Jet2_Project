@@ -6,7 +6,9 @@ $client-dashoboard-title-colour : orange;
 $button-border-radius : 5px;
 $cream: #F2EFEB;
 $cream2: #F2EFEB - 100;
-
+// body{
+//   margin: 0;
+// }
 #logo{
   height: 60px;
 }
@@ -25,7 +27,16 @@ display: inline-flex;
   display: inline-flex;
 left: 52%;
 }
+#nav1{
+  background-color: #e3f2fd;
 
+}
+#head1{
+  display: inline-flex;
+margin-bottom: 0px;
+margin-top: 10px;
+float: right;
+}
 #round-profile-pic{
 	border-radius: 50%;
 }

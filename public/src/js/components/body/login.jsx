@@ -35,33 +35,32 @@ var Login = React.createClass({
   },
   render: function(){
     return (
-      <form onSubmit={this.handleSubmit}>
 
-      <div className="modal-dialog">
-          <div className="modal-content">
-              <div className="modal-header">
-                <h1 className="text-center">Tract</h1>
-              </div>
-               <div className="modal-body">
-                 <div className="form-group">
-                       <input type="text" className="form-control input-lg" placeholder="email" onChange={this.handleChange}/>
-                   <div className="form-group">
-                       <input type="password" className="form-control input-lg" placeholder="password" onChange={this.handleChange}/>
+<form onSubmit={this.handleSubmit}>
 
-                   <div className="form-group">
-                       <input type="submit" className="btn btn-block btn-lg btn-primary" value="Login"/>
-                       <span className="pull-right"><a href="#">Register</a></span><span><a href="#">Forgot Password</a></span>
+  <div className="modal-dialog">
+    <div className="modal-content">
+      <div className="modal-header">
+        <h1 className="text-center">Tract</h1>
+      </div>
 
+      <div className="modal-body">
+       <div className="form-group">
+         <input type="text" className="form-control input-lg" placeholder="email" onChange={this.handleChange}/>
+         <div className="form-group">
+           <input type="password" className="form-control input-lg" placeholder="password" onChange={this.handleChange}/>
 
-               </div>
-             </div>
-               </div>
+           <div className="form-group">
+             <input type="submit" className="btn btn-block btn-lg btn-primary" value="Login"/>
+             <span className="pull-right"><input type="checkbox"/> Remember me</span><span><a href="#">Forgot Password</a></span>
+           </div>
 
-               </div>
-          </div>
+         </div>
        </div>
-     </form>
-
+     </div>
+   </div>
+ </div>
+</form>
     )
   }
 });

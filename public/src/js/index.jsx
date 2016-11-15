@@ -12,6 +12,7 @@ var Login = require('./components/body/login.jsx');
 var Main = require("./components/main.jsx");
 var Dashboard = require("./components/body/dashboard.jsx");
 var TimeList = require('./components/body/approver.jsx');
+var Admin = require('./components/body/admin.jsx');
 
 require("../sass/style.scss");
 
@@ -24,9 +25,10 @@ var App = React.createClass({
 
             <Route path="/" component={Main}>
            			 <IndexRoute component={Dashboard}/>
-            </Route>
-        <Route path="/approval" component={TimeList}/>
+                   <Route path="approval" component={TimeList}/>
+                    <Route path="admin" component={Admin}/>
 
+            </Route>
 	     </Router>
     )
   }
